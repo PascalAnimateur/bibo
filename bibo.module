@@ -608,6 +608,16 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
 }
 
 /**
+ * Implements hook_views_api().
+ */
+function bibo_views_api($module = NULL, $api = NULL) {
+  return array(
+    'api' => '3.0',
+    'path' => drupal_get_path('module', 'bibo') . '/views',
+  );
+}
+
+/**
  * Include all files here to prevent undefined functions.
  */
 module_load_include('inc', 'bibo', 'bibo_contributor');

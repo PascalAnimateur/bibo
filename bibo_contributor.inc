@@ -233,8 +233,8 @@ class BIBOContributorUIController extends EntityDefaultUIController {
       'title' => 'View',
       'page callback' => 'bibo_contributor_redirect_view',
       'page arguments' => array(4),
-      'access callback' => 'user_access',
-      'access arguments' => array('view any bibo_contributor'),
+      'access callback' => 'entity_access',
+      'access arguments' => array('view', $this->entityType),
       'weight' => -10,
       'type' => MENU_LOCAL_TASK,
     );
@@ -257,8 +257,8 @@ class BIBOContributorUIController extends EntityDefaultUIController {
       'title' => 'Edit',
       'page callback' => 'bibo_contributor_redirect_edit',
       'page arguments' => array(1),
-      'access callback' => 'user_access',
-      'access arguments' => array('edit any bibo_contributor'),
+      'access callback' => 'entity_access',
+      'access arguments' => array('edit', $this->entityType),
       'type' => MENU_LOCAL_TASK,
     );
 
