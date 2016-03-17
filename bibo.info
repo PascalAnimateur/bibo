@@ -1,0 +1,10 @@
+name = BIBO
+description = Bibliographic work management for the semantic web using the Bibliographic Ontology Specification.
+core = 7.x
+package = BIBO
+
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = entity
+dependencies[] = name
+dependencies[] = views

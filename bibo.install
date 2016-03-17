@@ -1,0 +1,125 @@
+<?php
+/**
+ * @file
+ * BIBO installation, update and schema.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function bibo_schema() {
+  $schema = array();
+
+  // Contributor database schema.
+  $schema['bibo_contributor'] = array(
+    'description' => 'The base table for contributor entities.',
+    'fields' => array(
+        'bibo_contributor_id' => array(
+          'description' => 'Primary Key: Identifier for a contributor.',
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+        'type' => array(
+          'description' => 'The type of this contributor.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+        ),
+        'name' => array(
+          'description' => 'The label of the contributor as displayed in a reference (i.e. abbreviated given name).',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+        ),
+        'created' => array(
+          'description' => 'The Unix timestamp when the contributor was created.',
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+        ),
+        'changed' => array(
+          'description' => 'The Unix timestamp when the contributor was most recently saved.',
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+        ),
+      ) + entity_exportable_schema_fields(),
+    'primary key' => array('bibo_contributor_id'),
+    'indexes' => array(
+      'type' => array('type'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_field_schema().
+ */
+function bibo_field_schema($field) {
+  $schema = array();
+
+  // Contribution field database schema.
+  if ($field['type'] == 'bibo_contribution') {
+    $schema = array(
+      'columns' => array(
+        'bibo_contributor_id' => array(
+          'type' => 'int',
+          'size' => 'normal',
+          'not null' => TRUE,
+          'description' => 'Contributor reference.',
+        ),
+        'bibo_contribution_role' => array(
+          'type' => 'varchar',
+          'length' => '32',
+          'not null' => TRUE,
+          'description' => 'Contributor role.',
+        ),
+      ),
+      'foreign keys' => array(
+        'bibo_contributor_id' => array(
+          'table' => 'bibo_contributor',
+          'columns' => array('bibo_contributor_id' => 'bibo_contributor_id'),
+        ),
+      ),
+    );
+  }
+
+  return $schema;
+}
+
+include_once 'bibo.field_base.inc';
+include_once 'bibo.field_instance.inc';
+
+/**
+ * Implements hook_install().
+ */
+function bibo_install() {
+  // Create field bases.
+  foreach (bibo_field_default_field_bases() as $field_base) {
+    field_create_field($field_base);
+  }
+
+  // Create field instances.
+  foreach (bibo_field_default_field_instances() as $field_instance) {
+    field_create_instance($field_instance);
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function bibo_uninstall() {
+  // Delete field instances.
+  foreach (bibo_field_default_field_instances() as $field_instance) {
+    field_delete_instance($field_instance, TRUE);
+  }
+
+  // Delete field bases.
+  foreach (bibo_field_default_field_bases() as $field_name => $field_base) {
+    field_delete_field($field_name);
+  }
+}
