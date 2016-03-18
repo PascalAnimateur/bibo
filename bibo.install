@@ -53,6 +53,93 @@ function bibo_schema() {
     ),
   );
 
+  // Work database schema.
+  $schema['bibo_work'] = array(
+    'description' => 'The base table for work entities.',
+    'fields' => array(
+        'bibo_work_id' => array(
+          'description' => 'Primary Key: Identifier for a work.',
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+        'type' => array(
+          'description' => 'The type of this work.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+        ),
+        'title' => array(
+          'description' => 'The title of the work.',
+          'type' => 'varchar',
+          'length' => 1024,
+          'not null' => TRUE,
+          'default' => '',
+        ),
+        'created' => array(
+          'description' => 'The Unix timestamp when the work was created.',
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+        ),
+        'changed' => array(
+          'description' => 'The Unix timestamp when the work was most recently saved.',
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+        ),
+      ) + entity_exportable_schema_fields(),
+    'primary key' => array('bibo_work_id'),
+    'indexes' => array(
+      'type' => array('type'),
+    ),
+  );
+
+  // Work type database schema.
+  $schema['bibo_work_type'] = array(
+    'description' => 'Stores information about defined work types.',
+    'fields' => array(
+        'bibo_work_type_id' => array(
+          'type' => 'serial',
+          'not null' => TRUE,
+          'description' => 'Primary Key: Unique work type identifier.',
+        ),
+        'type' => array(
+          'description' => 'The machine-readable name of this work type.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+        ),
+        'label' => array(
+          'description' => 'The human-readable name of this work type.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+          'translatable' => TRUE,
+        ),
+        'description' => array(
+          'description' => 'A brief description of this work type.',
+          'type' => 'text',
+          'not null' => TRUE,
+          'size' => 'medium',
+          'translatable' => TRUE,
+        ),
+        'weight' => array(
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+          'size' => 'tiny',
+          'description' => 'The weight of this work type in relation to others.',
+        ),
+      ) + entity_exportable_schema_fields(),
+    'primary key' => array('bibo_work_type_id'),
+    'unique keys' => array(
+      'type' => array('type'),
+    ),
+  );
+
   return $schema;
 }
 

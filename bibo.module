@@ -62,7 +62,92 @@ function bibo_entity_info() {
     ),
   );
 
+  // Work entity information.
+  $entity_info['bibo_work'] = array(
+    // Human-readable label and description.
+    'label' => t('Work'),
+    'plural label' => t('Works'),
+    'description' => t('Work published in an academic journal, presented at a conference, etc.'),
+    // Database table and keys.
+    'base table' => 'bibo_work',
+    'fieldable' => TRUE,
+    'entity keys' => array(
+      'id' => 'bibo_work_id',
+      'bundle' => 'type',
+      'label' => 'title',
+    ),
+    'module' => 'bibo',
+    // Bundles.
+    'bundles' => array(),
+    'bundle keys' => array('bundle' => 'type'),
+    // Callbacks.
+    'access callback' => 'bibo_work_access',
+    'label callback' => 'bibo_work_label',
+    'uri callback' => 'entity_class_uri',
+    // Entity and controller classes.
+    'entity class' => 'BIBOWork',
+    'controller class' => 'BIBOWorkController',
+    'metadata controller class' => 'BIBOWorkMetadataController',
+    'views controller class' => 'EntityDefaultViewsController',
+    // Administration UI.
+    'admin ui' => array(
+      'path' => 'admin/content/work',
+      'controller class' => 'BIBOWorkUIController',
+      'menu wildcard' => '%bibo_work',
+    ),
+  );
+
+  // Work type entity information.
+  $entity_info['bibo_work_type'] = array(
+    // Human-readable label and description.
+    'label' => t('Work type'),
+    'plural label' => t('Work types'),
+    'description' => t('Types of work (book, journal article, etc).'),
+    // Database table and keys.
+    'base table' => 'bibo_work_type',
+    'fieldable' => FALSE,
+    'bundle of' => 'bibo_work',
+    'exportable' => TRUE,
+    'entity keys' => array(
+      'id' => 'bibo_work_type_id',
+      'name' => 'type',
+      'label' => 'label',
+    ),
+    'module' => 'bibo',
+    // Callbacks.
+    'access callback' => 'bibo_work_type_access',
+    'label callback' => 'bibo_work_type_label',
+    // Entity and controller classes.
+    'entity class' => 'BIBOWorkType',
+    'controller class' => 'BIBOWorkTypeController',
+    // Administration UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/work_types',
+      'controller class' => 'BIBOWorkTypeUIController',
+      'menu wildcard' => '%bibo_work_type',
+    ),
+  );
+
   return $entity_info;
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function bibo_entity_info_alter(&$entity_info) {
+  // Work bundles information.
+  foreach (_bibo_get_work_types() as $type => $info) {
+    $entity_info['bibo_work']['bundles'][$type] = array(
+      'label' => $info->label,
+      'description' => $info->description,
+      'admin' => array(
+        'path' => 'admin/structure/work_types/manage/%bibo_work_type',
+        'real path' => 'admin/structure/work_types/manage/' . $type,
+        'bundle argument' => 4,
+        'access arguments' => array('administer work_types'),
+      ),
+    );
+  }
 }
 
 /**
@@ -108,7 +193,30 @@ function bibo_permission() {
     'view any bibo_contributor' => array(
       'title' => t('View any contributor.'),
     ),
+    // Work permissions.
+    'administer bibo_works' => array(
+      'title' => t('Administer works'),
+      'description' => t('Edit and delete all works.'),
+    ),
+    // Work type permissions.
+    'administer bibo_work_types' => array(
+      'title' => t('Administer work types'),
+      'description' => t('Edit and delete all work types and their fields.'),
+    ),
   );
+
+  // Generate permissions for individual work types.
+  foreach (_bibo_get_work_types() as $type) {
+    $type_name = check_plain($type->type);
+    $permissions += array(
+      "edit any $type_name bibo_work" => array(
+        'title' => t('%type_name: Edit any work', array('%type_name' => $type->label)),
+      ),
+      "view any $type_name bibo_work" => array(
+        'title' => t('%type_name: View any work', array('%type_name' => $type->label)),
+      ),
+    );
+  }
 
   return $permissions;
 }
@@ -621,3 +729,5 @@ function bibo_views_api($module = NULL, $api = NULL) {
  * Include all files here to prevent undefined functions.
  */
 module_load_include('inc', 'bibo', 'bibo_contributor');
+module_load_include('inc', 'bibo', 'bibo_work');
+module_load_include('inc', 'bibo', 'bibo_work_type');

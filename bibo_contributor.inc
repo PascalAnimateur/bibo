@@ -28,7 +28,7 @@ class BIBOContributor extends Entity {
  */
 class BIBOContributorController extends EntityAPIController {
   /**
-   * Create Contributor entity from array of values.
+   * Create contributor entity from array of values.
    */
   public function create(array $values = array()) {
     // Default values.
@@ -53,7 +53,7 @@ class BIBOContributorController extends EntityAPIController {
       }
     }
 
-    // Create the Contributor entity.
+    // Create the contributor entity.
     $entity = parent::create($values);
 
     // Set person's bibo_full_name field value (given/family).
@@ -68,7 +68,7 @@ class BIBOContributorController extends EntityAPIController {
   }
 
   /**
-   * Save Contributor entity.
+   * Save contributor entity.
    */
   public function save($entity) {
     // Warn about duplicate Contributors.
@@ -136,7 +136,7 @@ class BIBOContributorController extends EntityAPIController {
  */
 function _bibo_contributor_abbreviate_person_name($family, $given) {
   if (empty($family) || empty($given)) {
-    return t('Unknown');
+    return t('Unknown contributor');
   }
   // Start with Family name followed by ', '.
   $name = $family . ', ';
@@ -285,7 +285,7 @@ class BIBOContributorUIController extends EntityDefaultUIController {
 }
 
 /**
- * Access callback for the Contributor entity.
+ * Access callback for the contributor entity.
  */
 function bibo_contributor_access($op, $entity = NULL, $account = NULL) {
   if (user_access('administer bibo_contributors', $account)) {
@@ -302,10 +302,10 @@ function bibo_contributor_access($op, $entity = NULL, $account = NULL) {
 }
 
 /**
- * Label callback for the Contributor entity.
+ * Label callback for the contributor entity.
  */
 function bibo_contributor_label($entity, $entity_type = 'bibo_contributor') {
-  $label = t('Unknown');
+  $label = t('Unknown contributor');
 
   if ($entity->type == 'person') {
     $label = $entity->wrapper()->bibo_full_name->value();
@@ -335,22 +335,22 @@ function bibo_contributor_load_multiple($bibo_contributor_ids = array(), $condit
 /**
  * Menu title callback for showing individual contributor entities.
  */
-function bibo_contributor_page_title(BIBOContributor $entity) {
+function bibo_contributor_page_title($entity) {
   return bibo_contributor_label($entity);
 }
 
 /**
- * Sets up content to show an individual contributor.
+ * Sets up content to show an individual contributor entity.
  */
 function bibo_contributor_page_view($entity, $view_mode = 'full') {
   return entity_view('bibo_contributor', array($entity), $view_mode);
 }
 
 /**
- * Form callback to create or edit a contributor.
+ * Form callback to create or edit a contributor entity.
  */
 function bibo_contributor_form($form, &$form_state, $entity, $op = 'edit', $entity_type) {
-  // Add the default field elements.
+  // Add the default property elements.
   $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Organization name'), // This will be hidden if bundle is person.
@@ -628,7 +628,7 @@ function bibo_contributor_merge_form_submit($form, &$form_state) {
 }
 
 /**
- * Submit callback for the contributor delete button.
+ * Submit callback for the contributor delete action.
  */
 function bibo_contributor_form_submit_delete(&$form, &$form_state) {
   $form_state['redirect'] = 'admin/people/contributor/manage/' . $form_state['bibo_contributor']->bibo_contributor_id . '/delete';
