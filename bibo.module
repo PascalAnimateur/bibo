@@ -549,14 +549,14 @@ function bibo_field_formatter_settings_form($field, $instance, $view_mode, $form
 function bibo_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
-  $name_formats = array(
-    'abbreviated_name' => t('Abbreviated name'),
-    'full_name' => t('Full name'),
-  );
   $summary = array();
 
   // Contribution default formatter settings summary.
   if ($display['type'] == 'bibo_contribution_formatter_default') {
+    $name_formats = array(
+      'abbreviated_name' => t('Abbreviated name'),
+      'full_name' => t('Full name'),
+    );
     $summary[] = 'Name format: ' . $name_formats[$settings['name_format']];
     $summary[] = $settings['display_link'] ? t('Display link') : t('No link');
     $summary[] = $settings['display_role'] ? t('Display role') : t('Hide role');
