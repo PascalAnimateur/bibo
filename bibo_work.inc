@@ -207,8 +207,8 @@ function bibo_work_bundle_add_page($entity_type) {
     if (user_access('edit any ' . $bundle_name . ' bibo_work')) {
       $add_path = $info['admin ui']['path'] . '/add/' . $bundle_name;
       if (module_exists('bibo_i18n')) {
-        $label = entity_i18n_string('bibo:bibo_work_type:' . $bundle_name . ':label', $bundle_info['label']);
-        $description = entity_i18n_string('bibo:bibo_work_type:' . $bundle_name . ':description', $bundle_info['description']);
+        $label = entity_i18n_string('bibo:work_type:' . $bundle_name . ':label', $bundle_info['label']);
+        $description = entity_i18n_string('bibo:work_type:' . $bundle_name . ':description', $bundle_info['description']);
       }
       else {
         $label = $bundle_info['label'];
@@ -234,7 +234,7 @@ function bibo_work_form($form, &$form_state, $entity, $op = 'edit', $entity_type
   if ($op == 'add') {
     $info = entity_get_info('bibo_work');
     if (module_exists('bibo_i18n')) {
-      $label = entity_i18n_string('bibo:bibo_work_type:' . $entity->type . ':label', $info['bundles'][$entity->type]['label']);
+      $label = entity_i18n_string('bibo:work_type:' . $entity->type . ':label', $info['bundles'][$entity->type]['label']);
     }
     else {
       $label = $info['bundles'][$entity->type]['label'];

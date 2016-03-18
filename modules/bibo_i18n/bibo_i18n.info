@@ -1,0 +1,7 @@
+name = BIBO internationalization
+description = Multilingual support for the BIBO module.
+core = 7.x
+package = BIBO
+
+dependencies[] = bibo
+dependencies[] = i18n_string

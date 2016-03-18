@@ -77,7 +77,7 @@ function bibo_work_type_access($op, $type = NULL, $account = NULL) {
  */
 function bibo_work_type_label($entity, $entity_type) {
   if (module_exists('bibo_i18n')) {
-    return entity_i18n_string('bibo:bibo_work_type:' . $entity->type . ':label', $entity->label);
+    return entity_i18n_string('bibo:work_type:' . $entity->type . ':label', $entity->label);
   }
   return empty($entity) ? t('Untitled work type') : $entity->label;
 }
