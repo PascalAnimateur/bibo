@@ -320,9 +320,28 @@ function bibo_field_info() {
     'default_formatter' => 'bibo_contribution_formatter_default',
   );
 
+  // Publication status field information.
+  $field_info['bibo_publication_status'] = array(
+    'label' => t('BIBO Publication status'),
+    'description' => t('Work publication status and partial date field.'),
+    'settings' => array(
+      'year_range' => array(
+        'minimum' => date('Y') - 20,
+        'maximum' => date('Y') + 3,
+      ),
+    ),
+    'instance_settings' => array(
+      'allowed_statuses' => array(
+        'published' => 'published',
+        'unpublished' => 'unpublished',
+      ),
+    ),
+    'default_widget' => 'bibo_publication_status_widget_default',
+    'default_formatter' => 'bibo_publication_status_formatter_default',
+  );
+
   return $field_info;
 }
-
 
 /**
  * Implements hook_field_is_empty().
@@ -331,6 +350,14 @@ function bibo_field_is_empty($item, $field) {
   // Contribution field empty check.
   if ($field['type'] == 'bibo_contribution') {
     if (sizeof($item['bibo_contribution']) > sizeof(array_filter($item['bibo_contribution']))) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  // Publication status field empty check.
+  if ($field['type'] == 'bibo_publication_status') {
+    if (empty($item['bibo_publication_status']['status'])) {
       return TRUE;
     }
     return FALSE;
@@ -370,6 +397,83 @@ function bibo_field_validate($entity_type, $entity, $field, $instance, $langcode
       }
     }
   }
+
+  // Validate Publication status field.
+  if ($field['type'] == 'bibo_publication_status') {
+    foreach ($items as $delta => $item) {
+      // If field is not considered empty, validate its data.
+      if (!bibo_field_is_empty($item, $field)) {
+        // Validate publication status.
+        $status = $item['bibo_publication_status']['status'];
+        if (empty(_bibo_get_default_publication_statuses()[$status])) {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'bibo_publication_invalid_status',
+            'message' => t('%name: Publication status is invalid (%status).', array(
+              '%name' => $instance['label'],
+              '%status' => $status,
+            )),
+          );
+        }
+        // Validate partial date.
+        $year = $item['bibo_publication_status']['year'];
+        $month = $item['bibo_publication_status']['month'];
+        $day = $item['bibo_publication_status']['day'];
+        $date_format = empty($year) ? '' : 'Y';
+        $date_format .= empty($month) ? '' : '-m';
+        $date_format .= empty($day) ? '' : '-d';
+        switch ($date_format) {
+          case 'Y-m-d':
+          case 'Y-m':
+          case 'Y':
+            $date = empty($year) ? '' : $year;
+            $date .= empty($month) ? '' : '-' . sprintf('%02d', $month);
+            $date .= empty($day) ? '' : '-' . sprintf('%02d', $day);
+            $dt = DateTime::createFromFormat($date_format, $date);
+            if (!$dt || $dt->format($date_format) != $date) {
+              // Invalid date.
+              $errors[$field['field_name']][$langcode][$delta][] = array(
+                'error' => 'bibo_publication_invalid_date',
+                'message' => t('%name: Published date is invalid (%date).', array(
+                  '%name' => $instance['label'],
+                  '%date' => $date,
+                )),
+              );
+            }
+            break;
+
+          case '':
+            break;
+
+          default:
+            // Invalid date format.
+            $errors[$field['field_name']][$langcode][$delta][] = array(
+              'error' => 'bibo_publication_invalid_date_format',
+              'message' => t('%name: Published date format is invalid (%format).', array(
+                '%name' => $instance['label'],
+                '%format' => $date_format,
+              )),
+            );
+        }
+        // Validate status and date combination.
+        if ($status == 'published' && $date_format == '') {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'bibo_publication_status_invalid_status_date',
+            'message' => t('%name: Published status requires a date.', array(
+              '%name' => $instance['label'],
+            )),
+          );
+        }
+        if ($status != 'published' && $date_format != '') {
+          $errors[$field['field_name']][$langcode][$delta][] = array(
+            'error' => 'bibo_publication_status_invalid_status_date',
+            'message' => t('%name: Non-published status requires an empty date.', array(
+              '%name' => $instance['label'],
+            )),
+          );
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -387,6 +491,52 @@ function bibo_field_presave($entity_type, $entity, $field, $instance, $langcode,
       $items[$delta]['bibo_contribution_role'] = $item['bibo_contribution']['bibo_contribution_role'];
     }
   }
+
+  // Publication status field presave.
+  if ($field['type'] == 'bibo_publication_status' && array_key_exists('bibo_publication_status', $items[0])) {
+    foreach ($items as $delta => $item) {
+      $items[$delta]['status'] = $item['bibo_publication_status']['status'];
+      $items[$delta]['year'] = $item['bibo_publication_status']['year'];
+      $items[$delta]['month'] = $item['bibo_publication_status']['month'];
+      $items[$delta]['day'] = $item['bibo_publication_status']['day'];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function bibo_field_settings_form($field, $instance, $has_data) {
+  $form = array();
+
+  // Publication status field settings form.
+  if ($field['type'] == 'bibo_publication_status') {
+    $settings = $field['settings'];
+    $form['year_range'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Allowed year range'),
+      '#prefix' => '<div class="container-inline">',
+      '#suffix' => '</div>',
+    );
+    $form['year_range']['minimum'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Minimum'),
+      '#default_value' => $settings['year_range']['minimum'],
+      '#size' => 4,
+      '#maxlenght' => 4,
+      '#required' => TRUE,
+    );
+    $form['year_range']['maximum'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Maximum'),
+      '#default_value' => $settings['year_range']['maximum'],
+      '#size' => 4,
+      '#maxlenght' => 4,
+      '#required' => TRUE,
+    );
+  }
+
+  return $form;
 }
 
 /**
@@ -408,7 +558,31 @@ function bibo_field_instance_settings_form($field, $instance) {
     );
   }
 
+  // Publication status field instance settings form.
+  if ($field['type'] == 'bibo_publication_status') {
+    $settings = $instance['settings'];
+    $form['allowed_statuses'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Allowed publication statuses'),
+      '#options' => _bibo_get_default_publication_statuses(),
+      '#default_value' => $settings['allowed_statuses'],
+      '#required' => FALSE,
+      '#description' => t('Select the allowed statuses for this particular field instance.'),
+    );
+    $form['allowed_statuses']['published']['#disabled'] = TRUE;
+    $form['allowed_statuses']['unpublished']['#disabled'] = TRUE;
+    $form['#element_validate'] = array('_bibo_publication_status_validate');
+  }
+
   return $form;
+}
+
+/**
+ * Validation callback to force published / unpublished values.
+ */
+function _bibo_publication_status_validate($form, &$form_state) {
+  $form_state['values']['instance']['settings']['allowed_statuses']['published'] = 'published';
+  $form_state['values']['instance']['settings']['allowed_statuses']['unpublished'] = 'unpublished';
 }
 
 /**
@@ -427,6 +601,22 @@ function _bibo_get_default_contribution_roles() {
 }
 
 /**
+ * Helper function to get list of default publication statuses.
+ */
+function _bibo_get_default_publication_statuses() {
+  // Default publication statuses.
+  $statuses = array(
+    'published' => t('Published'),
+    'in_press' => t('In press'),
+    'accepted' => t('Accepted'),
+    'submitted' => t('Submitted'),
+    'unpublished' => t('Unpublished'),
+  );
+
+  return $statuses;
+}
+
+/**
  * Implements hook_field_widget_info().
  */
 function bibo_field_widget_info() {
@@ -436,6 +626,16 @@ function bibo_field_widget_info() {
   $widget_info['bibo_contribution_widget_default'] = array(
     'label' => t('Default'),
     'field types' => array('bibo_contribution'),
+    'behaviors' => array(
+      'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+      'default value' => FIELD_BEHAVIOR_NONE,
+    ),
+  );
+
+  // Publication status default widget information.
+  $widget_info['bibo_publication_status_widget_default'] = array(
+    'label' => t('Default'),
+    'field types' => array('bibo_publication_status'),
     'behaviors' => array(
       'multiple values' => FIELD_BEHAVIOR_DEFAULT,
       'default value' => FIELD_BEHAVIOR_NONE,
@@ -495,6 +695,135 @@ function bibo_field_widget_form(&$form, &$form_state, $field, $instance, $langco
       );
     }
   }
+
+  // Publication status field widget form.
+  if ($instance['widget']['type'] == 'bibo_publication_status_widget_default') {
+    $values = array();
+    if (isset($form_state['complete form'][$field['field_name']][$langcode][$delta])) {
+      // Initial values from $form_state['complete_form'].
+      $previous = $form_state['complete form'][$field['field_name']][$langcode][$delta]['bibo_publication_status'];
+      $values = array(
+        'status' => $previous['status']['#value'],
+        'year' => $previous['year']['#value'],
+        'month' => $previous['month']['#value'],
+        'day' => $previous['day']['#value'],
+      );
+    }
+    else if (isset($items[$delta])) {
+      // Initial values from existing field data.
+      $values = isset($items[$delta]['bibo_publication_status']) ? $items[$delta]['bibo_publication_status'] : $items[$delta];
+    }
+    if (!isset($values['status'])) {
+      // Default initial values.
+      $values = array(
+        'status' => 'unpublished',
+        'year' => 0,
+        'month' => 0,
+        'day' => 0,
+      );
+    }
+
+    // Inline container for the widget.
+    $element['bibo_publication_status']['#prefix'] = '<div class="container-inline" id="publication-status-' . $delta . '">';
+    $element['bibo_publication_status']['#suffix'] = '</div>';
+
+    // Status.
+    $allowed_statuses = array_intersect_key(_bibo_get_default_publication_statuses(), array_filter($instance['settings']['allowed_statuses']));
+    $element['bibo_publication_status']['status'] = array(
+      '#type' => 'select',
+      '#title' => t('Status'),
+      '#options' => $allowed_statuses,
+      '#default_value' => $values['status'],
+      '#ajax' => array(
+        'callback' => 'bibo_publication_status_ajax_callback',
+        'wrapper' => 'publication-status-' . $delta,
+        'method' => 'replace',
+      ),
+      '#field_name' => $field['field_name'],
+      '#delta' => $delta,
+    );
+
+    // Partial date (year).
+    $year_access = ($values['status'] == 'published');
+    $year_range = $field['settings']['year_range'];
+    $element['bibo_publication_status']['year'] = array(
+      '#type' => 'select',
+      '#options' => array(0 => '--') + date_years($year_range['minimum'], $year_range['maximum'], TRUE),
+      '#default_value' => $values['year'],
+      '#access' => $year_access,
+      '#ajax' => array(
+        'callback' => 'bibo_publication_status_ajax_callback',
+        'wrapper' => 'publication-status-' . $delta,
+        'method' => 'replace',
+      ),
+      '#field_name' => $field['field_name'],
+      '#delta' => $delta,
+    );
+    if (!$year_access) {
+      $element['bibo_publication_status']['year']['#value'] = 0;
+    }
+
+    // Partial date (month).
+    $month_access = $year_access && $values['year'] != 0;
+    $element['bibo_publication_status']['month'] = array(
+      '#type' => 'select',
+      '#options' => array(0 => '--') + date_month_names(TRUE),
+      '#default_value' => $values['month'],
+      '#access' => $month_access,
+      '#ajax' => array(
+        'callback' => 'bibo_publication_status_ajax_callback',
+        'wrapper' => 'publication-status-' . $delta,
+        'method' => 'replace',
+      ),
+      '#field_name' => $field['field_name'],
+      '#delta' => $delta,
+    );
+    if (!$month_access) {
+      $element['bibo_publication_status']['month']['#value'] = 0;
+    }
+
+    // Partial date (day).
+    $day_access = $month_access && $values['month'] != 0;
+    $element['bibo_publication_status']['day'] = array(
+      '#type' => 'select',
+      '#options' => array(0 => '--') + date_days(TRUE, $values['month'], $values['year']),
+      '#default_value' => $values['day'],
+      '#access' => $day_access,
+    );
+    if (!$day_access) {
+      $element['bibo_publication_status']['day']['#value'] = 0;
+    }
+
+    // Remove button.
+    if ($field['cardinality'] == FIELD_CARDINALITY_UNLIMITED) {
+      $element['bibo_publication_status']['remove_button'] = array(
+        '#type' => 'button',
+        '#value' => t('Remove'),
+        '#name' => drupal_html_class(
+          'remove-' . $field['field_name'] . '-' . $langcode . '-' . $delta
+        ),
+        '#submit' => 'bibo_multivalue_item_ajax_callback',
+        '#ajax' => array('bibo_multivalue_item_ajax_callback'),
+        '#limit_validation_errors' => array(),
+        '#field_name' => $field['field_name'],
+        '#langcode' => $langcode,
+        '#delta' => $delta,
+        '#field_remove_item' => TRUE,
+      );
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * AJAX callback for the publication status widget.
+ */
+function bibo_publication_status_ajax_callback($form, $form_state) {
+  $field_name = $form_state['triggering_element']['#field_name'];
+  $langcode = $form[$field_name]['#language'];
+  $delta = $form_state['triggering_element']['#delta'];
+  $element = $form[$field_name][$langcode][$delta]['bibo_publication_status'];
 
   return $element;
 }
@@ -600,6 +929,8 @@ function bibo_multivalue_item_remove_element(&$element, &$form_state, $field_nam
  * Implements hook_field_formatter_info().
  */
 function bibo_field_formatter_info() {
+  $formatter_info = array();
+  
   // Contribution default formatter information.
   $formatter_info['bibo_contribution_formatter_default'] = array(
     'label' => t('Default'),
@@ -609,6 +940,12 @@ function bibo_field_formatter_info() {
       'display_link' => TRUE,
       'display_role' => TRUE,
     ),
+  );
+
+  // Publication status default formatter information.
+  $formatter_info['bibo_publication_status_formatter_default'] = array(
+    'label' => t('Default'),
+    'field types' => array('bibo_publication_status'),
   );
 
   return $formatter_info;
@@ -709,6 +1046,23 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
           '#markup' => $item_output,
         );
       }
+    }
+  }
+
+  // Publication status default formatter view.
+  if ($display['type'] == 'bibo_publication_status_formatter_default') {
+    foreach ($items as $delta => $item) {
+      $publication_statuses = _bibo_get_default_publication_statuses();
+      $item_output = $publication_statuses[$item['status']];
+      if ($item['status'] == 'published') {
+        $item_output .= empty($item['year']) ? '' : ' (' . $item['year'];
+        $item_output .= empty($item['month']) ? '' : '-' . $item['month'];
+        $item_output .= empty($item['day']) ? '' : '-' . $item['day'];
+        $item_output .= ')';
+      }
+      $element[$delta]['bibo_publication_status_row']['content'] = array(
+        '#markup' => $item_output,
+      );
     }
   }
 

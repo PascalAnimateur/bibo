@@ -175,6 +175,39 @@ function bibo_field_schema($field) {
     );
   }
 
+  // Publication status field database schema.
+  if ($field['type'] == 'bibo_publication_status') {
+    $schema = array(
+      'columns' => array(
+        'status' => array(
+          'type' => 'varchar',
+          'length' => '32',
+          'not null' => TRUE,
+          'description' => 'Publication status of a work.',
+        ),
+        'year' => array(
+          'type' => 'varchar',
+          'length' => '4',
+          'not null' => FALSE,
+          'description' => 'Year component of the publication date.',
+        ),
+        'month' => array(
+          'type' => 'varchar',
+          'length' => '2',
+          'not null' => FALSE,
+          'description' => 'Month component of the publication date.',
+        ),
+        'day' => array(
+          'type' => 'varchar',
+          'length' => '2',
+          'not null' => FALSE,
+          'description' => 'Day component of the publication date.',
+        ),
+      ),
+    );
+  }
+
+
   return $schema;
 }
 
