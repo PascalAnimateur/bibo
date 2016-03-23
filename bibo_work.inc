@@ -117,8 +117,8 @@ class BIBOWorkUIController extends EntityDefaultUIController {
       'title arguments' => array(1),
       'page callback' => 'bibo_work_page_view',
       'page arguments' => array(1),
-      'access callback' => 'entity_access',
-      'access arguments' => array('view', $this->entityType),
+      'access callback' => 'user_access',
+      'access arguments' => array('view any bibo_work'),
     );
     $items['work/' . $wildcard . '/view'] = array(
       'title' => 'View',
@@ -147,15 +147,10 @@ function bibo_work_access($op, $entity = NULL, $account = NULL) {
   if (user_access('administer bibo_works', $account)) {
     return TRUE;
   }
-
-  if (isset($entity) && $type_name = $entity->type) {
-    $op = ($op == 'view') ? 'view' : 'edit';
-    if (user_access("$op any $type_name bibo_work", $account)) {
-      return TRUE;
-    }
+  if ($op == 'view') {
+    return user_access('view any bibo_work');
   }
-
-  return FALSE;
+  return user_access("edit any $entity->type bibo_work", $account);
 }
 
 /**
@@ -256,6 +251,11 @@ function bibo_work_form($form, &$form_state, $entity, $op = 'edit', $entity_type
   // Add the field related form elements.
   $form_state['bibo_work'] = $entity;
   field_attach_form('bibo_work', $entity, $form, $form_state);
+
+  // Autocomplete secondary_title field.
+  if (isset($form['bibo_secondary_title'])) {
+    $form['bibo_secondary_title'][$form['bibo_secondary_title']['#language']][0]['value']['#autocomplete_path'] = 'bibo_secondary_title/autocomplete/' . $entity->type;
+  }
 
   $form['actions'] = array(
     '#type' => 'container',

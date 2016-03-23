@@ -4,7 +4,6 @@
  * Bibliographic work management for the semantic web using the Bibliographic Ontology Specification.
  */
 
-
 /**
  * Implements hook_entity_info().
  */
@@ -163,6 +162,16 @@ function bibo_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  // Secondary title field autocomplete menu item.
+  $items['bibo_secondary_title/autocomplete/%'] = array(
+    'title' => 'Secondary title autocomplete',
+    'page callback' => 'bibo_secondary_title_autocomplete',
+    'page arguments' => array(2),
+    'access callback' => 'user_access',
+    'access arguments' => array('view any bibo_work'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -198,6 +207,10 @@ function bibo_permission() {
       'title' => t('Administer works'),
       'description' => t('Edit and delete all works.'),
     ),
+    'view any bibo_work' => array(
+      'title' => t('View any work'),
+      'description' => t('View any work.'),
+    ),
     // Work type permissions.
     'administer bibo_work_types' => array(
       'title' => t('Administer work types'),
@@ -211,9 +224,6 @@ function bibo_permission() {
     $permissions += array(
       "edit any $type_name bibo_work" => array(
         'title' => t('%type_name: Edit any work', array('%type_name' => $type->label)),
-      ),
-      "view any $type_name bibo_work" => array(
-        'title' => t('%type_name: View any work', array('%type_name' => $type->label)),
       ),
     );
   }
@@ -298,6 +308,26 @@ function bibo_contribution_autocomplete_validate($element, &$form_state, $form) 
   }
   // Update the value of this element so the field can validate bibo_contributor_id.
   form_set_value($element, $value, $form_state);
+}
+
+/**
+ * Autocomplete callback for bibo_secondary_title field.
+ */
+function bibo_secondary_title_autocomplete($bundle, $string = '') {
+  $suggestions = array();
+
+  // Find matching secondary_title.
+  $results = db_select('field_data_bibo_secondary_title', 't')
+    ->fields('t', array('bibo_secondary_title_value'))
+    ->condition('bundle', $bundle, '=')
+    ->condition('bibo_secondary_title_value', '%' . db_like($string) . '%', 'LIKE')
+    ->range(0,10)
+    ->execute();
+  foreach ($results as $result) {
+    $suggestions[$result->bibo_secondary_title_value] = $result->bibo_secondary_title_value;
+  }
+
+  drupal_json_output($suggestions);
 }
 
 /**
