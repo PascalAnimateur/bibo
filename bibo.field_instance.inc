@@ -10,6 +10,46 @@
 function bibo_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'bibo_work-book-bibo_contributors'.
+  $field_instances['bibo_work-book-bibo_contributors'] = array(
+    'bundle' => 'book',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'bibo',
+        'settings' => array(
+          'display_link' => TRUE,
+          'display_role' => TRUE,
+          'name_format' => 'full_name',
+        ),
+        'type' => 'bibo_contribution_formatter_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_contributors',
+    'label' => 'Contributors',
+    'required' => 1,
+    'settings' => array(
+      'allowed_roles' => array(
+        'author' => 'author',
+        'book_author' => 0,
+        'editor' => 'editor',
+        'translator' => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'bibo',
+      'settings' => array(),
+      'type' => 'bibo_contribution_widget_default',
+      'weight' => 1,
+    ),
+  );
+
   // Exported field_instance: 'bibo_contributor-person-bibo_full_name'.
   $field_instances['bibo_contributor-person-bibo_full_name'] = array(
     'bundle' => 'person',
@@ -114,9 +154,48 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-book-bibo_publication_status'.
+  $field_instances['bibo_work-book-bibo_publication_status'] = array(
+    'bundle' => 'book',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'bibo',
+        'settings' => array(),
+        'type' => 'bibo_publication_status_formatter_default',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_publication_status',
+    'label' => 'Publication status',
+    'required' => 1,
+    'settings' => array(
+      'allowed_statuses' => array(
+        'accepted' => 0,
+        'in_press' => 'in_press',
+        'published' => 'published',
+        'submitted' => 0,
+        'unpublished' => 'unpublished',
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'bibo',
+      'settings' => array(),
+      'type' => 'bibo_publication_status_widget_default',
+      'weight' => 2,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('Contributors');
   t('Full name');
+  t('Publication status');
 
   return $field_instances;
 }

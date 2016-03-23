@@ -10,6 +10,21 @@
 function bibo_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'bibo_contributors'.
+  $field_bases['bibo_contributors'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_contributors',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'bibo',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'bibo_contribution',
+  );
+
   // Exported field_base: 'bibo_full_name'.
   $field_bases['bibo_full_name'] = array(
     'active' => 1,
@@ -108,6 +123,26 @@ Prof.',
     ),
     'translatable' => 0,
     'type' => 'name',
+  );
+
+  // Exported field_base: 'bibo_publication_status'.
+  $field_bases['bibo_publication_status'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_publication_status',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'bibo',
+    'settings' => array(
+      'year_range' => array(
+        'maximum' => 2019,
+        'minimum' => 1996,
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'bibo_publication_status',
   );
 
   return $field_bases;
