@@ -141,6 +141,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -218,6 +219,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 'book_author',
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -295,6 +297,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -373,6 +376,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -451,6 +455,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -529,6 +534,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -607,6 +613,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -657,6 +664,37 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-presentation-bibo_presentation_type'.
+  $field_instances['bibo_work-presentation-bibo_presentation_type'] = array(
+    'bundle' => 'presentation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_presentation_type',
+    'label' => 'Presentation type',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-report-bibo_contributors'.
   $field_instances['bibo_work-report-bibo_contributors'] = array(
     'bundle' => 'report',
@@ -684,6 +722,7 @@ function bibo_field_default_field_instances() {
         'author' => 'author',
         'book_author' => 0,
         'editor' => 'editor',
+        'thesis_supervisor' => 0,
         'translator' => 0,
       ),
       'user_register_form' => FALSE,
@@ -731,6 +770,37 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_publication_status_widget_default',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-report-bibo_report_type'.
+  $field_instances['bibo_work-report-bibo_report_type'] = array(
+    'bundle' => 'report',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_report_type',
+    'label' => 'Report type',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 5,
     ),
   );
 
@@ -812,11 +882,45 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-thesis-bibo_thesis_type'.
+  $field_instances['bibo_work-thesis-bibo_thesis_type'] = array(
+    'bundle' => 'thesis',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_thesis_type',
+    'label' => 'Thesis type',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 5,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Contributors');
   t('Full name');
+  t('Presentation type');
   t('Publication status');
+  t('Report type');
+  t('Thesis type');
 
   return $field_instances;
 }
