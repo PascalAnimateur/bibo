@@ -595,6 +595,7 @@ function _bibo_get_default_contribution_roles() {
     'editor' => t('Editor'),
     'translator' => t('Translator'),
     'book_author' => t('Book author'),
+    'thesis_supervisor' => t('Thesis supervisor'),
   );
 
   return $roles;
@@ -742,6 +743,9 @@ function bibo_field_widget_form(&$form, &$form_state, $field, $instance, $langco
       '#field_name' => $field['field_name'],
       '#delta' => $delta,
     );
+    if ($instance['required']) {
+      $element['bibo_publication_status']['status']['#title'] .= " " . theme('form_required_marker');
+    }
 
     // Partial date (year).
     $year_access = ($values['status'] == 'published');
