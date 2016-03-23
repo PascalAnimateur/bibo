@@ -121,7 +121,7 @@ function bibo_work_type_form($form, &$form_state, $entity, $op = 'edit') {
   $form['description'] = array(
     '#title' => t('Description'),
     '#type' => 'textarea',
-    '#default_value' => isset($entity->description) ? isset($entity->description) : '',
+    '#default_value' => isset($entity->description) ? $entity->description : '',
     '#description' => t('Describe this work type. The text will be displayed on the <em>Add work</em> page.'),
   );
 
