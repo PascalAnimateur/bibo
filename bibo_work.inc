@@ -276,26 +276,26 @@ function bibo_work_form($form, &$form_state, $entity, $op = 'edit', $entity_type
     $form['bibo_secondary_title'][$form['bibo_secondary_title']['#language']][0]['value']['#autocomplete_path'] = 'bibo_secondary_title/autocomplete/' . $entity->type;
   }
 
+  // Display certain fields inline.
+  $form['#attached']['css'] = array(
+    drupal_get_path('module', 'bibo') . '/css/inline-fields.css',
+  );
+
+  // Form actions.
   $form['actions'] = array(
     '#type' => 'container',
     '#attributes' => array('class' => array('form-actions')),
     '#weight' => 400,
   );
-
-  // We add the form #submit array to this button along with the actual submit
-  // handler to preserve any submit handlers added by a form callback_wrapper.
   $submit = array();
-
   if (!empty($form['#submit'])) {
     $submit += $form['#submit'];
   }
-
   $form['actions']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
     '#submit' => $submit + array('bibo_work_edit_form_submit'),
   );
-
   if (!empty($entity->title)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
