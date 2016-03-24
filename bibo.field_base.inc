@@ -125,6 +125,27 @@ Prof.',
     'type' => 'name',
   );
 
+  // Exported field_base: 'bibo_place'.
+  $field_bases['bibo_place'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_place',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'bibo_publication_status'.
   $field_bases['bibo_publication_status'] = array(
     'active' => 1,
@@ -143,6 +164,27 @@ Prof.',
     ),
     'translatable' => 0,
     'type' => 'bibo_publication_status',
+  );
+
+  // Exported field_base: 'bibo_publisher'.
+  $field_bases['bibo_publisher'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_publisher',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'bibo_presentation_type'.

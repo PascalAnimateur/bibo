@@ -155,6 +155,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-book-bibo_place'.
+  $field_instances['bibo_work-book-bibo_place'] = array(
+    'bundle' => 'book',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-book-bibo_publication_status'.
   $field_instances['bibo_work-book-bibo_publication_status'] = array(
     'bundle' => 'book',
@@ -189,6 +223,40 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_publication_status_widget_default',
       'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-book-bibo_publisher'.
+  $field_instances['bibo_work-book-bibo_publisher'] = array(
+    'bundle' => 'book',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_publisher',
+    'label' => 'Publisher',
+    'required' => 1,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 4,
     ),
   );
 
@@ -267,6 +335,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-book_section-bibo_place'.
+  $field_instances['bibo_work-book_section-bibo_place'] = array(
+    'bundle' => 'book_section',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-book_section-bibo_publication_status'.
   $field_instances['bibo_work-book_section-bibo_publication_status'] = array(
     'bundle' => 'book_section',
@@ -301,6 +403,40 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_publication_status_widget_default',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-book_section-bibo_publisher'.
+  $field_instances['bibo_work-book_section-bibo_publisher'] = array(
+    'bundle' => 'book_section',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_publisher',
+    'label' => 'Publisher',
+    'required' => 1,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
     ),
   );
 
@@ -379,6 +515,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-conference_paper-bibo_place'.
+  $field_instances['bibo_work-conference_paper-bibo_place'] = array(
+    'bundle' => 'conference_paper',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance:
   // 'bibo_work-conference_paper-bibo_publication_status'.
   $field_instances['bibo_work-conference_paper-bibo_publication_status'] = array(
@@ -414,6 +584,40 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_publication_status_widget_default',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-conference_paper-bibo_publisher'.
+  $field_instances['bibo_work-conference_paper-bibo_publisher'] = array(
+    'bundle' => 'conference_paper',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_publisher',
+    'label' => 'Publisher',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
     ),
   );
 
@@ -720,6 +924,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-newspaper_article-bibo_place'.
+  $field_instances['bibo_work-newspaper_article-bibo_place'] = array(
+    'bundle' => 'newspaper_article',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance:
   // 'bibo_work-newspaper_article-bibo_publication_status'.
   $field_instances['bibo_work-newspaper_article-bibo_publication_status'] = array(
@@ -831,6 +1069,40 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_contribution_widget_default',
       'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-presentation-bibo_place'.
+  $field_instances['bibo_work-presentation-bibo_place'] = array(
+    'bundle' => 'presentation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
     ),
   );
 
@@ -977,6 +1249,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-report-bibo_place'.
+  $field_instances['bibo_work-report-bibo_place'] = array(
+    'bundle' => 'report',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-report-bibo_publication_status'.
   $field_instances['bibo_work-report-bibo_publication_status'] = array(
     'bundle' => 'report',
@@ -1011,6 +1317,40 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_publication_status_widget_default',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-report-bibo_publisher'.
+  $field_instances['bibo_work-report-bibo_publisher'] = array(
+    'bundle' => 'report',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_publisher',
+    'label' => 'Institution',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
     ),
   );
 
@@ -1120,6 +1460,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-thesis-bibo_place'.
+  $field_instances['bibo_work-thesis-bibo_place'] = array(
+    'bundle' => 'thesis',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_place',
+    'label' => 'Place',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-thesis-bibo_publication_status'.
   $field_instances['bibo_work-thesis-bibo_publication_status'] = array(
     'bundle' => 'thesis',
@@ -1154,6 +1528,40 @@ function bibo_field_default_field_instances() {
       'settings' => array(),
       'type' => 'bibo_publication_status_widget_default',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-thesis-bibo_publisher'.
+  $field_instances['bibo_work-thesis-bibo_publisher'] = array(
+    'bundle' => 'thesis',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_publisher',
+    'label' => 'University',
+    'required' => 1,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 120,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
     ),
   );
 
@@ -1229,15 +1637,19 @@ function bibo_field_default_field_instances() {
   t('Contributors');
   t('Faculty name');
   t('Full name');
+  t('Institution');
   t('Journal name');
   t('Magazine name');
   t('Meeting name');
   t('Newspaper name');
+  t('Place');
   t('Presentation type');
   t('Proceedings title');
   t('Publication status');
+  t('Publisher');
   t('Report type');
   t('Thesis type');
+  t('University');
 
   return $field_instances;
 }
