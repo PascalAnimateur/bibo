@@ -114,6 +114,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-book-bibo_abstract'.
+  $field_instances['bibo_work-book-bibo_abstract'] = array(
+    'bundle' => 'book',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 9,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_abstract',
+    'label' => 'Abstract',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-book-bibo_contributors'.
   $field_instances['bibo_work-book-bibo_contributors'] = array(
     'bundle' => 'book',
