@@ -125,6 +125,48 @@ Prof.',
     'type' => 'name',
   );
 
+  // Exported field_base: 'bibo_issue'.
+  $field_bases['bibo_issue'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_issue',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 16,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'bibo_pages'.
+  $field_bases['bibo_pages'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_pages',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 16,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'bibo_place'.
   $field_bases['bibo_place'] = array(
     'active' => 1,
@@ -144,6 +186,31 @@ Prof.',
     ),
     'translatable' => 0,
     'type' => 'text',
+  );
+
+  // Exported field_base: 'bibo_presentation_type'.
+  $field_bases['bibo_presentation_type'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_presentation_type',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'poster' => 'Poster',
+        'spoken' => 'Spoken',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'bibo_publication_status'.
@@ -187,31 +254,6 @@ Prof.',
     'type' => 'text',
   );
 
-  // Exported field_base: 'bibo_presentation_type'.
-  $field_bases['bibo_presentation_type'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'bibo_presentation_type',
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'poster' => 'Poster',
-        'spoken' => 'Spoken',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_text',
-  );
-
   // Exported field_base: 'bibo_report_type'.
   $field_bases['bibo_report_type'] = array(
     'active' => 1,
@@ -235,6 +277,48 @@ Prof.',
     ),
     'translatable' => 0,
     'type' => 'list_text',
+  );
+
+  // Exported field_base: 'bibo_secondary_title'.
+  $field_bases['bibo_secondary_title'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_secondary_title',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 1024,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'bibo_serial_number'.
+  $field_bases['bibo_serial_number'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'bibo_serial_number',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 64,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'bibo_thesis_type'.
@@ -263,13 +347,13 @@ Prof.',
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'bibo_secondary_title'.
-  $field_bases['bibo_secondary_title'] = array(
+  // Exported field_base: 'bibo_volume'.
+  $field_bases['bibo_volume'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'bibo_secondary_title',
+    'field_name' => 'bibo_volume',
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -278,7 +362,7 @@ Prof.',
     'locked' => 0,
     'module' => 'text',
     'settings' => array(
-      'max_length' => 1024,
+      'max_length' => 16,
     ),
     'translatable' => 0,
     'type' => 'text',
