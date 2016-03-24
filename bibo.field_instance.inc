@@ -189,6 +189,42 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-book-bibo_full_text'.
+  $field_instances['bibo_work-book-bibo_full_text'] = array(
+    'bundle' => 'book',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 10,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_full_text',
+    'label' => 'Full text',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => 'full-text',
+      'file_extensions' => 'pdf',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'bar',
+      ),
+      'type' => 'file_generic',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-book-bibo_issue'.
   $field_instances['bibo_work-book-bibo_issue'] = array(
     'bundle' => 'book',
@@ -427,6 +463,57 @@ function bibo_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'bibo_work-book-bibo_url'.
+  $field_instances['bibo_work-book-bibo_url'] = array(
+    'bundle' => 'book',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 11,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_url',
+    'label' => 'URL',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 1,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => '',
+      ),
+      'enable_tokens' => 1,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 1,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 11,
     ),
   );
 
@@ -2519,6 +2606,7 @@ function bibo_field_default_field_instances() {
   t('Contributors');
   t('Edition');
   t('Full name');
+  t('Full text');
   t('ISBN');
   t('ISSN');
   t('Institution');
@@ -2540,6 +2628,7 @@ function bibo_field_default_field_instances() {
   t('Thesis degree');
   t('Thesis type');
   t('University');
+  t('URL');
   t('Volume');
 
   return $field_instances;
