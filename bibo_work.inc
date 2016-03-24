@@ -252,6 +252,16 @@ function bibo_work_form($form, &$form_state, $entity, $op = 'edit', $entity_type
   $form_state['bibo_work'] = $entity;
   field_attach_form('bibo_work', $entity, $form, $form_state);
 
+  // Autocomplete place field.
+  if (isset($form['bibo_place'])) {
+    $form['bibo_place'][$form['bibo_place']['#language']][0]['value']['#autocomplete_path'] = 'bibo_place/autocomplete';
+  }
+
+  // Autocomplete publisher field.
+  if (isset($form['bibo_publisher'])) {
+    $form['bibo_publisher'][$form['bibo_publisher']['#language']][0]['value']['#autocomplete_path'] = 'bibo_publisher/autocomplete/' . $entity->type;
+  }
+  
   // Autocomplete secondary_title field.
   if (isset($form['bibo_secondary_title'])) {
     $form['bibo_secondary_title'][$form['bibo_secondary_title']['#language']][0]['value']['#autocomplete_path'] = 'bibo_secondary_title/autocomplete/' . $entity->type;

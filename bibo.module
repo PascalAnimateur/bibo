@@ -153,7 +153,7 @@ function bibo_entity_info_alter(&$entity_info) {
  * Implement hook_menu().
  */
 function bibo_menu() {
-  // Contribution field autocomplete menu item.
+  // Autocomplete bibo_contribution.
   $items['bibo_contribution/autocomplete'] = array(
     'title' => 'Contribution autocomplete',
     'page callback' => 'bibo_contribution_autocomplete',
@@ -162,7 +162,26 @@ function bibo_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  // Secondary title field autocomplete menu item.
+  // Autocomplete bibo_place.
+  $items['bibo_place/autocomplete'] = array(
+    'title' => 'Place autocomplete',
+    'page callback' => 'bibo_place_autocomplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('view any bibo_work'),
+    'type' => MENU_CALLBACK,
+  );
+
+  // Autocomplete bibo_publisher.
+  $items['bibo_publisher/autocomplete/%'] = array(
+    'title' => 'Place autocomplete',
+    'page callback' => 'bibo_publisher_autocomplete',
+    'page arguments' => array(2),
+    'access callback' => 'user_access',
+    'access arguments' => array('view any bibo_work'),
+    'type' => MENU_CALLBACK,
+  );
+
+  // Autocomplete bibo_secondary_title.
   $items['bibo_secondary_title/autocomplete/%'] = array(
     'title' => 'Secondary title autocomplete',
     'page callback' => 'bibo_secondary_title_autocomplete',
@@ -171,7 +190,6 @@ function bibo_menu() {
     'access arguments' => array('view any bibo_work'),
     'type' => MENU_CALLBACK,
   );
-
   return $items;
 }
 
@@ -308,6 +326,58 @@ function bibo_contribution_autocomplete_validate($element, &$form_state, $form) 
   }
   // Update the value of this element so the field can validate bibo_contributor_id.
   form_set_value($element, $value, $form_state);
+}
+
+/**
+ * Autocomplete callback for bibo_place field.
+ */
+function bibo_place_autocomplete($string = '') {
+  $suggestions = array();
+
+  // Find matching place.
+  $results = db_select('field_data_bibo_place', 'p')
+    ->fields('p', array('bibo_place_value'))
+    ->condition('bibo_place_value', '%' . db_like($string) . '%', 'LIKE')
+    ->range(0,10)
+    ->execute();
+  foreach ($results as $result) {
+    $suggestions[$result->bibo_place_value] = $result->bibo_place_value;
+  }
+
+  drupal_json_output($suggestions);
+}
+
+/**
+ * Autocomplete callback for bibo_publisher field.
+ */
+function bibo_publisher_autocomplete($bundle, $string = '') {
+  $suggestions = array();
+  $bundles = array();
+
+  // Group publisher suggestions for certain work types.
+  switch ($bundle) {
+    case 'book':
+    case 'book_section':
+    case 'conference_paper':
+      $bundles = array('book', 'book_section', 'conference_paper');
+      break;
+
+    default:
+      $bundles = array($bundle);
+  }
+
+  // Find matching publishers.
+  $results = db_select('field_data_bibo_publisher', 'p')
+    ->fields('p', array('bibo_publisher_value'))
+    ->condition('bundle', $bundles, 'IN')
+    ->condition('bibo_publisher_value', '%' . db_like($string) . '%', 'LIKE')
+    ->range(0,10)
+    ->execute();
+  foreach ($results as $result) {
+    $suggestions[$result->bibo_publisher_value] = $result->bibo_publisher_value;
+  }
+
+  drupal_json_output($suggestions);
 }
 
 /**
