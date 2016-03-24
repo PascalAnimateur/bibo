@@ -289,11 +289,11 @@ function bibo_contribution_autocomplete($string = '') {
  * Validation callback to process autocomplete result.
  */
 function bibo_contribution_autocomplete_validate($element, &$form_state, $form) {
-  $value = '';
+  $id = '';
   if (!empty($element['#value'])) {
     // Match bibo_contributor_id from square bracket in "Name [id]".
     if (preg_match("/.+\[(\d+)\]/", $element['#value'], $matches)) {
-      $value = $matches[1];
+      $id = $matches[1];
     }
     else {
       // Match bibo_contributor_id from matching name property.
@@ -308,15 +308,16 @@ function bibo_contribution_autocomplete_validate($element, &$form_state, $form) 
         }
         else {
           // Found one contributor.
-          $id = array_keys($result['bibo_contributor']);
-          $value = $id[0];
+          $id = reset(array_keys($result['bibo_contributor']));
         }
       }
       else {
         // Found no contributor, create a new one.
         $entity = entity_create('bibo_contributor', array('name' => $element['#value']));
         if (entity_save('bibo_contributor', $entity)) {
-          $value = $entity->bibo_contributor_id;
+          $id = $entity->bibo_contributor_id;
+          // Update form_state value with created contributor id.
+          drupal_array_set_nested_value($form_state['input'], $element['#parents'], bibo_contributor_label($entity) . ' [' . $id . ']');
         }
         else {
           form_error($element, t('Could not create contributor %name.', array('%name' => $element['#value'])));
@@ -325,7 +326,7 @@ function bibo_contribution_autocomplete_validate($element, &$form_state, $form) 
     }
   }
   // Update the value of this element so the field can validate bibo_contributor_id.
-  form_set_value($element, $value, $form_state);
+  form_set_value($element, $id, $form_state);
 }
 
 /**
@@ -759,15 +760,23 @@ function bibo_field_widget_form(&$form, &$form_state, $field, $instance, $langco
     $element['bibo_contribution']['#suffix'] = '</div>';
 
     // Contributor.
-    $id = isset($items[$delta]['bibo_contributor_id']) ? $items[$delta]['bibo_contributor_id'] : 0;
-    $entity = entity_load('bibo_contributor', array($id));
-    $entity = empty($entity) ? NULL : bibo_contributor_label($entity[$id]) . ' [' . $id . ']';
     $element['bibo_contribution']['bibo_contributor_id'] = array(
       '#type' => 'textfield',
-      '#default_value' => $entity,
       '#element_validate' => array('bibo_contribution_autocomplete_validate'),
       '#autocomplete_path' => 'bibo_contribution/autocomplete',
     );
+    if (isset($form_state['values']) && isset($form_state['values'][$field['field_name']][$langcode][$delta])) {
+      $id = $form_state['values'][$field['field_name']][$langcode][$delta]['bibo_contribution']['bibo_contributor_id'];
+      $entity = entity_load('bibo_contributor', array($id));
+      $entity = empty($entity) ? NULL : bibo_contributor_label($entity[$id]) . ' [' . $id . ']';
+      $element['bibo_contribution']['bibo_contributor_id']['#value'] = $entity;
+    }
+    else if (isset($items[$delta]['bibo_contributor_id'])) {
+      $id = $items[$delta]['bibo_contributor_id'];
+      $entity = entity_load('bibo_contributor', array($id));
+      $entity = empty($entity) ? NULL : bibo_contributor_label($entity[$id]) . ' [' . $id . ']';
+      $element['bibo_contribution']['bibo_contributor_id']['#default_value'] = $entity;
+    }
 
     // Contribution role.
     $roles = _bibo_get_default_contribution_roles();
