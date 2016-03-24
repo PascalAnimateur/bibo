@@ -5,3 +5,7 @@ div.field-name-bibo-serial_number {
   float: left;
   margin-right: 0.75em;
 }
+
+div.field-name-bibo-abstract {
+  clear: left;
+}
