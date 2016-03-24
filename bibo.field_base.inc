@@ -28,7 +28,7 @@ function bibo_field_default_field_bases() {
     'translatable' => 0,
     'type' => 'text_long',
   );
-  
+
   // Exported field_base: 'bibo_contributors'.
   $field_bases['bibo_contributors'] = array(
     'active' => 1,
