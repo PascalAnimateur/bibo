@@ -112,6 +112,15 @@ class BIBOWorkUIController extends EntityDefaultUIController {
     );
 
     // Work 'View' tab.
+    $items[$this->path . '/manage/' . $wildcard . '/view'] = array(
+      'title' => 'View',
+      'page callback' => 'bibo_work_redirect_view',
+      'page arguments' => array(4),
+      'access callback' => 'entity_access',
+      'access arguments' => array('view', $this->entityType),
+      'weight' => -10,
+      'type' => MENU_LOCAL_TASK,
+    );
     $items['work/' . $wildcard] = array(
       'title callback' => 'bibo_work_page_title',
       'title arguments' => array(1),
@@ -261,7 +270,7 @@ function bibo_work_form($form, &$form_state, $entity, $op = 'edit', $entity_type
   if (isset($form['bibo_publisher'])) {
     $form['bibo_publisher'][$form['bibo_publisher']['#language']][0]['value']['#autocomplete_path'] = 'bibo_publisher/autocomplete/' . $entity->type;
   }
-  
+
   // Autocomplete secondary_title field.
   if (isset($form['bibo_secondary_title'])) {
     $form['bibo_secondary_title'][$form['bibo_secondary_title']['#language']][0]['value']['#autocomplete_path'] = 'bibo_secondary_title/autocomplete/' . $entity->type;
@@ -345,6 +354,13 @@ function bibo_work_edit_form_submit(&$form, &$form_state) {
  */
 function bibo_work_form_submit_delete(&$form, &$form_state) {
   $form_state['redirect'] = 'admin/content/work/manage/' . $form_state['bibo_work']->bibo_work_id . '/delete';
+}
+
+/**
+ * Redirect callback for the work 'View' tab.
+ */
+function bibo_work_redirect_view($entity) {
+  drupal_goto('work/' . $entity->bibo_work_id);
 }
 
 /**
