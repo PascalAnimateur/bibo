@@ -1,0 +1,7 @@
+name = BIBO feeds
+description = Feeds support for the BIBO module.
+core = 7.x
+package = BIBO
+
+dependencies[] = bibo
+dependencies[] = feeds

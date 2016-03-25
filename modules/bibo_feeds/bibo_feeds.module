@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function bibo_feeds_ctools_plugin_api() {
+  list($module, $api) = func_get_args();
+  if ($module == "feeds" && $api == 'feeds_importer_default') {
+    return array("version" => 1);
+  }
+}
+
+/**
+ * Implements of hook_feeds_plugins().
+ */
+function bibo_feeds_plugins() {
+  $info = array();
+
+  $info['FeedsBIBOProcessor'] = array(
+    'name' => 'BIBO Processor',
+    'description' => 'Create and update works from parsed content.',
+    'handler' => array(
+      'parent' => 'FeedsProcessor',
+      'class' => 'FeedsBIBOProcessor',
+      'file' => 'FeedsBIBOProcessor.inc',
+      'path' => drupal_get_path('module', 'bibo_feeds'),
+    ),
+  );
+
+  return $info;
+}
