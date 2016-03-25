@@ -26,6 +26,45 @@ class FeedsBIBOProcessor extends FeedsProcessor {
     entity_delete_multiple('bibo_work', $ids);
   }
 
+  /**
+   * Execute mapping on an item.
+   */
+  protected function map(FeedsSource $source, FeedsParserResult $result, $target_item = NULL) {
+    $targets = $this->getCachedTargets();
+    if (!isset($result->current_item['type'])) {
+      drupal_set_message(t('Could not determine work type from parsed result. Make sure type is properly mapped and populated.'), 'error');
+      return array();
+    }
+
+    // Get fields for the work type we are mapping to.
+    $fields = field_info_instances($this->entityType(), $result->current_item['type']);
+
+    if (empty($target_item)) {
+      $target_item = array();
+    }
+
+    foreach ($this->getMappings() as $mapping) {
+      if (isset($targets[$mapping['target']]['real_target'])) {
+        $target_name = $targets[$mapping['target']]['real_target'];
+      }
+      else {
+        $target_name = $mapping['target'];
+      }
+      if (isset($fields[$target_name])) {
+        $target_item->{$target_name}[$mapping['language']] = array();
+      }
+      else {
+        $target_item->{$target_name} = NULL;
+      }
+    }
+
+    foreach ($this->getMappings() as $mapping) {
+      $value = $this->getSourceValue($source, $result, $mapping['source']);
+      $this->mapToTarget($source, $mapping['target'], $target_item, $value, $mapping);
+    }
+
+    return $target_item;
+  }
 
   /**
    * Override parent::configForm().
@@ -77,47 +116,34 @@ class FeedsBIBOProcessor extends FeedsProcessor {
 
     return $targets;
   }
-
+  
   /**
-   * Execute mapping on an item.
+   * Override getHookTargets to expose all targets.
    */
-  protected function map(FeedsSource $source, FeedsParserResult $result, $target_item = NULL) {
-    $targets = $this->getCachedTargets();
-    if (!isset($result->current_item['type'])) {
-      drupal_set_message(t('Could not determine work type from parsed result. Make sure type is properly mapped and populated.'), 'error');
-      return array();
+  protected function getHookTargets(array &$targets) {
+    self::loadMappers();
+
+    $entity_type = $this->entityType();
+    foreach (_bibo_get_work_types() as $type => $info) {
+      $bundle = $info->type;
+      $targets += module_invoke_all('feeds_processor_targets', $entity_type, $bundle);
+
+      drupal_alter('feeds_processor_targets', $targets, $entity_type, $bundle);
     }
 
-    // Get fields for the work type we are mapping to.
-    $fields = field_info_instances($this->entityType(), $result->current_item['type']);
-
-    if (empty($target_item)) {
-      $target_item = array();
-    }
-
-    foreach ($this->getMappings() as $mapping) {
-      if (isset($targets[$mapping['target']]['real_target'])) {
-        $target_name = $targets[$mapping['target']]['real_target'];
-      }
-      else {
-        $target_name = $mapping['target'];
-      }
-      if (isset($fields[$target_name])) {
-        $target_item->{$target_name}[$mapping['language']] = array();
-      }
-      else {
-        $target_item->{$target_name} = NULL;
-      }
-    }
-
-    foreach ($this->getMappings() as $mapping) {
-      $value = $this->getSourceValue($source, $result, $mapping['source']);
-      $this->mapToTarget($source, $mapping['target'], $target_item, $value, $mapping);
-    }
-
-    return $target_item;
+    // Rename fields with multiple uses.
+    $targets['bibo_issue']['name'] = t('Edition / Issue');
+    $targets['bibo_issue']['description'] = t('The Edition / Issue field of the entity.');
+    $targets['bibo_pages']['name'] = t('Pages');
+    $targets['bibo_pages']['description'] = t('The Pages field of the entity.');
+    $targets['bibo_publisher']['name'] = t('Publisher / Institution / University');
+    $targets['bibo_publisher']['description'] = t('The Publisher / Institution / University field of the entity.');
+    $targets['bibo_secondary_title']['name'] = t('Secondary title');
+    $targets['bibo_secondary_title']['description'] = t('The Collection / Book title / Journal name / etc. field of the entity.');
+    $targets['bibo_serial_number']['name'] = t('ISBN / ISSN / Report number');
+    $targets['bibo_serial_number']['description'] = t('The ISBN / ISSN / Report number field of the entity.');
   }
-
+  
   /**
    * Override setTargetElement to operate on a target item that is a work.
    */
