@@ -69,16 +69,16 @@ function bibo_feeds_processor_targets($entity_type, $bundle_name) {
 function bibo_contribution_feeds_set_target(FeedsSource $source, $entity, $target, array $values, array $mapping) {
   $language = $mapping['language'];
   list($field_name, $role) = explode(':', $mapping['target']);
-  $field = isset($entity->$field_name) ? $entity->$field_name : array($language => array());
+  $field = array($language => array());
 
   // Iterate over all values.
-  $delta = sizeof($field[$language]);
   foreach ($values as $value) {
     if (is_object($value) && $value instanceof FeedsElement) {
       $value = $value->getValue();
     }
-    $field[$language][$delta]['bibo_contribution'] = _bibo_contribution_process_value($value, $role);
-    $delta++;
+    $field[$language][] = array(
+      'bibo_contribution' => _bibo_contribution_process_value($value, $role),
+    );
   }
   $entity->{$field_name} = $field;
 }
