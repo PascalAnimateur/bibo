@@ -13,6 +13,20 @@ class FeedsBIBOProcessor extends FeedsProcessor {
   }
 
   /**
+   * Validates an entity.
+   *
+   * @throws FeedsValidationException $e
+   *   Thrown if validation fails.
+   */
+  protected function entityValidate($entity) {
+    // Validate work type.
+    if (!in_array($entity->type, array_keys(_bibo_get_work_types()))) {
+      throw new FeedsValidationException(t('Invalid work type (@type).', array('@type' => $entity->type)));
+    }
+    return parent::entityValidate($entity);
+  }
+
+  /**
    * Save a work.
    */
   public function entitySave($entity) {
