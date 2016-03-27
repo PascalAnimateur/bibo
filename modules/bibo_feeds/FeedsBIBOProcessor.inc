@@ -31,13 +31,20 @@ class FeedsBIBOProcessor extends FeedsProcessor {
    */
   protected function map(FeedsSource $source, FeedsParserResult $result, $target_item = NULL) {
     $targets = $this->getCachedTargets();
-    if (!isset($result->current_item['type'])) {
+    $source_type = '';
+    foreach ($this->getMappings() as $mapping) {
+      if ($mapping['target'] == 'type') {
+        $source_type = $mapping['source'];
+        break;
+      }
+    }
+    if (empty($source) || !isset($result->current_item[$source_type])) {
       drupal_set_message(t('Could not determine work type from parsed result. Make sure type is properly mapped and populated.'), 'error');
       return array();
     }
 
     // Get fields for the work type we are mapping to.
-    $fields = field_info_instances($this->entityType(), $result->current_item['type']);
+    $fields = field_info_instances($this->entityType(), $result->current_item[$source_type]);
 
     if (empty($target_item)) {
       $target_item = array();
