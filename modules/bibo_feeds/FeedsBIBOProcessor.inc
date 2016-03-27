@@ -23,6 +23,8 @@ class FeedsBIBOProcessor extends FeedsProcessor {
     if (!in_array($entity->type, array_keys(_bibo_get_work_types()))) {
       throw new FeedsValidationException(t('Invalid work type (@type).', array('@type' => $entity->type)));
     }
+    // TODO: Validate work entity (allowed publication status, contributor role, field values, etc.
+
     return parent::entityValidate($entity);
   }
 
