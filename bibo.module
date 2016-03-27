@@ -295,33 +295,19 @@ function bibo_contribution_autocomplete_validate($element, &$form_state, $form) 
     if (preg_match("/.+\[(\d+)\]/", $element['#value'], $matches)) {
       $id = $matches[1];
     }
+    // Find or create contributor from provided name value.
     else {
-      // Match bibo_contributor_id from matching name property.
-      $query = new EntityFieldQuery;
-      $result = $query->entityCondition('entity_type', 'bibo_contributor')
-        ->propertyCondition('name', $element['#value'], '=')
-        ->execute();
-      if (isset($result['bibo_contributor'])) {
-        if (count($result['bibo_contributor']) > 1) {
-          // Found many contributors, we need exactly one.
-          form_error($element, t('Multiple contributors match the specified name. Please select one from the autocomplete suggestions.'));
-        }
-        else {
-          // Found one contributor.
-          $id = reset(array_keys($result['bibo_contributor']));
-        }
+      $ids = _bibo_contributor_find_or_create($element['#value']);
+      if (count($ids) > 1) {
+        // Found many contributors, we need exactly one.
+        form_error($element, t('Multiple contributors match the specified name. Please select one from the autocomplete suggestions.'));
+      }
+      else if ($id = reset($ids)) {
+        // Update form_state value with created contributor id.
+        drupal_array_set_nested_value($form_state['input'], $element['#parents'], $element['#value'] . ' [' . $id . ']');
       }
       else {
-        // Found no contributor, create a new one.
-        $entity = entity_create('bibo_contributor', array('name' => $element['#value']));
-        if (entity_save('bibo_contributor', $entity)) {
-          $id = $entity->bibo_contributor_id;
-          // Update form_state value with created contributor id.
-          drupal_array_set_nested_value($form_state['input'], $element['#parents'], bibo_contributor_label($entity) . ' [' . $id . ']');
-        }
-        else {
-          form_error($element, t('Could not create contributor %name.', array('%name' => $element['#value'])));
-        }
+        form_error($element, t('Could not create contributor %name.', array('%name' => $element['#value'])));
       }
     }
   }
@@ -765,7 +751,9 @@ function bibo_field_widget_form(&$form, &$form_state, $field, $instance, $langco
       '#element_validate' => array('bibo_contribution_autocomplete_validate'),
       '#autocomplete_path' => 'bibo_contribution/autocomplete',
     );
-    if (isset($form_state['values']) && isset($form_state['values'][$field['field_name']][$langcode][$delta])) {
+    
+    if (isset($form_state['values']) && isset($form_state['values'][$field['field_name']][$langcode][$delta])
+      && isset($form_state['values'][$field['field_name']][$langcode][$delta]['bibo_contribution']['bibo_contributor_id'])) {
       $id = $form_state['values'][$field['field_name']][$langcode][$delta]['bibo_contribution']['bibo_contributor_id'];
       $entity = entity_load('bibo_contributor', array($id));
       $entity = empty($entity) ? NULL : bibo_contributor_label($entity[$id]) . ' [' . $id . ']';
