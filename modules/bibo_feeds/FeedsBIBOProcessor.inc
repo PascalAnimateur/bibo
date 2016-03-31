@@ -185,7 +185,8 @@ class FeedsBIBOProcessor extends FeedsProcessor {
         break;
 
       case 'type':
-        $target_work->type = $value;
+        // Convert BIBO itemType to machine_name.
+        $target_work->type = preg_replace('/(^|[a-z])([A-Z])/e', 'strtolower(strlen("\\1") ? "\\1_\\2" : "\\2")', $value);
         break;
 
       default:
