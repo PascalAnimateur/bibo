@@ -69,7 +69,12 @@ function bibo_feeds_processor_targets($entity_type, $bundle_name) {
 function bibo_contribution_feeds_set_target(FeedsSource $source, $entity, $target, array $values, array $mapping) {
   $language = $mapping['language'];
   list($field_name, $role) = explode(':', $mapping['target']);
-  $field = $entity->{$field_name};
+
+  // Only keep contributors from feeds source.
+  $field = array($language => array());
+  $field[$language] = array_filter($entity->{$field_name}[$language], function ($item) {
+    return isset($item['bibo_contribution']);
+  });
 
   // Iterate over all values.
   foreach ($values as $value) {
