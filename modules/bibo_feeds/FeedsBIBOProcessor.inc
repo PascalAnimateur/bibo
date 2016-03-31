@@ -32,6 +32,7 @@ class FeedsBIBOProcessor extends FeedsProcessor {
    * Save a work.
    */
   public function entitySave($entity) {
+    $entity->changed = time();
     entity_save('bibo_work', $entity);
   }
 
@@ -86,6 +87,9 @@ class FeedsBIBOProcessor extends FeedsProcessor {
       $this->mapToTarget($source, $mapping['target'], $target_item, $value, $mapping);
     }
 
+    if (!isset($target_item->created)) {
+      $target_item->created = time();
+    }
     return $target_item;
   }
 
