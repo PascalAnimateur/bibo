@@ -415,7 +415,7 @@ function bibo_field_default_field_instances() {
     ),
     'entity_type' => 'bibo_work',
     'field_name' => 'bibo_secondary_title',
-    'label' => 'Collection',
+    'label' => 'Series title',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -3099,7 +3099,7 @@ function bibo_field_default_field_instances() {
     ),
     'entity_type' => 'bibo_work',
     'field_name' => 'bibo_secondary_title',
-    'label' => 'Collection',
+    'label' => 'Series title',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -3468,7 +3468,7 @@ function bibo_field_default_field_instances() {
     ),
     'entity_type' => 'bibo_work',
     'field_name' => 'bibo_secondary_title',
-    'label' => 'Thesis degree',
+    'label' => 'Degree name',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -3571,7 +3571,7 @@ function bibo_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Abstract');
   t('Book title');
-  t('Collection');
+  t('Series title');
   t('Contributors');
   t('Edition');
   t('Full name');
@@ -3594,7 +3594,7 @@ function bibo_field_default_field_instances() {
   t('Publisher');
   t('Report number');
   t('Report type');
-  t('Thesis degree');
+  t('Degree name');
   t('Thesis type');
   t('URL');
   t('University');

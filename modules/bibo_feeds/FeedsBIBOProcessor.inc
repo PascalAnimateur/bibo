@@ -166,7 +166,7 @@ class FeedsBIBOProcessor extends FeedsProcessor {
     $targets['bibo_publisher']['name'] = t('Publisher / Institution / University');
     $targets['bibo_publisher']['description'] = t('The Publisher / Institution / University field of the entity.');
     $targets['bibo_secondary_title']['name'] = t('Secondary title');
-    $targets['bibo_secondary_title']['description'] = t('The Collection / Book title / Journal name / etc. field of the entity.');
+    $targets['bibo_secondary_title']['description'] = t('The Series / Book title / Journal name / etc. field of the entity.');
     $targets['bibo_serial_number']['name'] = t('ISBN / ISSN / Report number');
     $targets['bibo_serial_number']['description'] = t('The ISBN / ISSN / Report number field of the entity.');
   }
