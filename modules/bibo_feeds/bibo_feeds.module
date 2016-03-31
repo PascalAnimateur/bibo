@@ -69,7 +69,7 @@ function bibo_feeds_processor_targets($entity_type, $bundle_name) {
 function bibo_contribution_feeds_set_target(FeedsSource $source, $entity, $target, array $values, array $mapping) {
   $language = $mapping['language'];
   list($field_name, $role) = explode(':', $mapping['target']);
-  $field = array($language => array());
+  $field = $entity->{$field_name};
 
   // Iterate over all values.
   foreach ($values as $value) {
