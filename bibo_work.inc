@@ -150,6 +150,36 @@ class BIBOWorkUIController extends EntityDefaultUIController {
 }
 
 /**
+ * Work views controller.
+ */
+class BIBOWorkViewsController extends EntityDefaultViewsController {
+  /**
+   * Defines the result for hook_views_data().
+   */
+  public function views_data() {
+    $data = parent::views_data();
+
+    // Work edit / delete links.
+    $data['bibo_work']['edit_link'] = array(
+      'field' => array(
+        'title' => t('Work edit link'),
+        'help' => t('Provide a simple link to edit a work.'),
+        'handler' => 'views_handler_field_work_link_edit',
+      ),
+    );
+    $data['bibo_work']['delete_link'] = array(
+      'field' => array(
+        'title' => t('Work delete link'),
+        'help' => t('Provide a simple link to delete a work.'),
+        'handler' => 'views_handler_field_work_link_delete',
+      ),
+    );
+
+    return $data;
+  }
+}
+
+/**
  * Access callback for the work entity.
  */
 function bibo_work_access($op, $entity = NULL, $account = NULL) {
