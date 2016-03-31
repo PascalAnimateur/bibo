@@ -144,7 +144,7 @@ function _bibo_contributor_abbreviate_person_name($family, $given) {
   // Add initial(s) from given name (split with ' ' and '-' delimiters).
   $parts = preg_split("/[\s-]/", $given);
   foreach ($parts as $part) {
-    $name .= isset($part[0]) ? $part[0] : '' . '.';
+    $name .= drupal_substr($part, 0, 1) . '.';
   }
 
   return $name;

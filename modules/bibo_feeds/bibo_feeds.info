@@ -5,3 +5,4 @@ package = BIBO
 
 dependencies[] = bibo
 dependencies[] = feeds
+files[] = FeedsBIBOProcessor.inc
