@@ -87,8 +87,9 @@ function bibo_contribution_feeds_set_target(FeedsSource $source, $entity, $targe
  * Helper function to process contribution value.
  */
 function _bibo_contribution_process_value($value, $role) {
+  $contributor_id = _bibo_contributor_find_or_create($value);
   $contributor = array(
-    'bibo_contributor_id' => reset(_bibo_contributor_find_or_create($value)),
+    'bibo_contributor_id' => reset($contributor_id),
     'bibo_contribution_role' => $role,
   );
 

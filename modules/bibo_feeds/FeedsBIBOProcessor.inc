@@ -186,7 +186,13 @@ class FeedsBIBOProcessor extends FeedsProcessor {
 
       case 'type':
         // Convert BIBO itemType to machine_name.
-        $target_work->type = preg_replace('/(^|[a-z])([A-Z])/e', 'strtolower(strlen("\\1") ? "\\1_\\2" : "\\2")', $value);
+        $target_work->type = strtolower(
+          preg_replace(
+            ["/([A-Z]+)/", "/_([A-Z]+)([A-Z][a-z])/"],
+            ["_$1", "_$1_$2"],
+            lcfirst($value)
+          )
+        );
         break;
 
       default:
