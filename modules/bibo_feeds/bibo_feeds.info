@@ -5,4 +5,5 @@ package = BIBO
 
 dependencies[] = bibo
 dependencies[] = feeds
+files[] = bibo_feeds.feeds_importer_default.inc
 files[] = FeedsBIBOProcessor.inc
