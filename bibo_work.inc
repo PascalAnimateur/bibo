@@ -158,7 +158,13 @@ class BIBOWorkViewsController extends EntityDefaultViewsController {
    */
   public function views_data() {
     $data = parent::views_data();
-
+    
+    // Override default views data (link_to_work).
+    $data['bibo_work']['table']['base']['defaults'] = array('field' => 'title');
+    $data['bibo_work']['bibo_work_id']['field']['handler'] = 'views_handler_field_work';
+    $data['bibo_work']['title']['field']['handler'] = 'views_handler_field_work';
+    $data['bibo_work']['title']['field']['link_to_work default'] = TRUE;
+    
     // Work edit / delete links.
     $data['bibo_work']['edit_link'] = array(
       'field' => array(
