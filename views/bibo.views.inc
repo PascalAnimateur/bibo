@@ -77,35 +77,3 @@ function bibo_field_views_data_views_data_alter(&$data, $field) {
     return $data;
   }
 }
-
-/**
- * Implements hook_views_data().
- */
-function bibo_views_data() {
-  $data = array();
-
-  // Contributor edit / delete / merge links.
-  $data['bibo_contributor']['edit_link'] = array(
-    'field' => array(
-      'title' => t('Contributor edit link'),
-      'help' => t('Provide a simple link to edit a contributor.'),
-      'handler' => 'views_handler_field_contributor_link_edit',
-    ),
-  );
-  $data['bibo_contributor']['delete_link'] = array(
-    'field' => array(
-      'title' => t('Contributor delete link'),
-      'help' => t('Provide a simple link to delete a contributor.'),
-      'handler' => 'views_handler_field_contributor_link_delete',
-    ),
-  );
-  $data['bibo_contributor']['merge_link'] = array(
-    'field' => array(
-      'title' => t('Contributor merge link'),
-      'help' => t('Provide a simple link to merge a contributor.'),
-      'handler' => 'views_handler_field_contributor_link_merge',
-    ),
-  );
-
-  return $data;
-}

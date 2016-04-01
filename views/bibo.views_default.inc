@@ -36,7 +36,6 @@ function bibo_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'views_bulk_operations' => 'views_bulk_operations',
-    'rendered_entity' => 'rendered_entity',
     'name' => 'name',
     'type' => 'type',
     'changed' => 'changed',
@@ -47,11 +46,6 @@ function bibo_views_default_views() {
   $handler->display->display_options['style_options']['default'] = 'changed';
   $handler->display->display_options['style_options']['info'] = array(
     'views_bulk_operations' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'rendered_entity' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -134,21 +128,11 @@ function bibo_views_default_views() {
       ),
     ),
   );
-  /* Field: Contributor: Rendered Contributor */
-  $handler->display->display_options['fields']['rendered_entity']['id'] = 'rendered_entity';
-  $handler->display->display_options['fields']['rendered_entity']['table'] = 'views_entity_bibo_contributor';
-  $handler->display->display_options['fields']['rendered_entity']['field'] = 'rendered_entity';
-  $handler->display->display_options['fields']['rendered_entity']['label'] = '';
-  $handler->display->display_options['fields']['rendered_entity']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['rendered_entity']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['rendered_entity']['link_to_entity'] = 1;
-  $handler->display->display_options['fields']['rendered_entity']['bypass_access'] = 0;
   /* Field: Contributor: Contributor Label */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'bibo_contributor';
   $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['name']['alter']['text'] = '[rendered_entity]';
+  $handler->display->display_options['fields']['name']['label'] = 'Contributor';
   /* Field: Contributor: Type */
   $handler->display->display_options['fields']['type']['id'] = 'type';
   $handler->display->display_options['fields']['type']['table'] = 'bibo_contributor';
@@ -238,7 +222,7 @@ function bibo_views_default_views() {
     t('- Choose an operation -'),
     t('Delete'),
     t('Modify values'),
-    t('Contributor Label'),
+    t('Contributor'),
     t('[rendered_entity]'),
     t('Type'),
     t('Updated'),

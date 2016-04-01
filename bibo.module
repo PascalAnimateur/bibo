@@ -52,7 +52,7 @@ function bibo_entity_info() {
     'entity class' => 'BIBOContributor',
     'controller class' => 'BIBOContributorController',
     'metadata controller class' => 'BIBOContributorMetadataController',
-    'views controller class' => 'EntityDefaultViewsController',
+    'views controller class' => 'BIBOContributorViewsController',
     // Administration UI.
     'admin ui' => array(
       'path' => 'admin/people/contributor',
