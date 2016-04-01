@@ -122,7 +122,7 @@ class BIBOWorkUIController extends EntityDefaultUIController {
       'type' => MENU_LOCAL_TASK,
     );
     $items['work/' . $wildcard] = array(
-      'title callback' => 'bibo_work_page_title',
+      'title callback' => 'bibo_work_label',
       'title arguments' => array(1),
       'page callback' => 'bibo_work_page_view',
       'page arguments' => array(1),
@@ -217,13 +217,6 @@ function bibo_work_load($bibo_work_id) {
  */
 function bibo_work_load_multiple($bibo_work_ids = array(), $conditions = array(), $reset = FALSE) {
   return entity_load('bibo_work', $bibo_work_ids, $conditions, $reset);
-}
-
-/**
- * Menu title callback for showing individual work entities.
- */
-function bibo_work_page_title($entity) {
-  return bibo_work_label($entity);
 }
 
 /**

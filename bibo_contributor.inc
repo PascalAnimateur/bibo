@@ -239,7 +239,7 @@ class BIBOContributorUIController extends EntityDefaultUIController {
       'type' => MENU_LOCAL_TASK,
     );
     $items['contributor/' . $wildcard] = array(
-      'title callback' => 'bibo_contributor_page_title',
+      'title callback' => 'bibo_contributor_label',
       'title arguments' => array(1),
       'page callback' => 'bibo_contributor_page_view',
       'page arguments' => array(1),
@@ -373,13 +373,6 @@ function bibo_contributor_load($bibo_contributor_id) {
  */
 function bibo_contributor_load_multiple($bibo_contributor_ids = array(), $conditions = array(), $reset = FALSE) {
   return entity_load('bibo_contributor', $bibo_contributor_ids, $conditions, $reset);
-}
-
-/**
- * Menu title callback for showing individual contributor entities.
- */
-function bibo_contributor_page_title($entity) {
-  return bibo_contributor_label($entity);
 }
 
 /**
