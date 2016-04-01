@@ -45,6 +45,55 @@ class BIBOWorkController extends EntityAPIController {
 
     return $entity;
   }
+
+  /**
+   * Build content for rendering work entity.
+   */
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+    $build = array(
+      '#view_mode' => $view_mode,
+      '#entity_type' => 'bibo_work',
+      '#bundle' => $entity->type,
+    );
+
+    if ($view_mode == 'full') {
+      // Get fields instances info ordered by widget weight.
+      $instances = field_info_instances('bibo_work', $entity->type);
+      uasort($instances, function($a, $b) {
+        $a_weight = (is_array($a) && isset($a['widget']['weight'])) ? $a['widget']['weight'] : 0;
+        $b_weight = (is_array($b) && isset($b['widget']['weight'])) ? $b['widget']['weight'] : 0;
+        if ($a_weight == $b_weight) {
+          return 0;
+        }
+        return ($a_weight < $b_weight) ? -1 : 1;
+      });
+
+      // Build rows (label, value) for the table display.
+      $rows = array();
+      foreach ($instances as $instance) {
+        $label = $instance['label'];
+        $value = '';
+        $items = $entity->$instance['field_name'];
+        if (isset($items[LANGUAGE_NONE])) {
+          foreach ($items[LANGUAGE_NONE] as $item) {
+            $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item);
+            $render['#prefix'] = '<div>';
+            $render['#suffix'] = '</div>';
+            $value .= drupal_render($render);
+          }
+          $rows[] = array(array('data' => $label, 'align' => 'right'), $value);
+        }
+      }
+
+      // Display fields as a table.
+      $build['table'] = array(
+        '#theme' => 'table',
+        '#rows' => $rows,
+      );
+    }
+
+    return $build;
+  }
 }
 
 /**
