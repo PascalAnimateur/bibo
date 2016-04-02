@@ -1165,12 +1165,13 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
   if ($display['type'] == 'bibo_publication_status_formatter_default') {
     foreach ($items as $delta => $item) {
       $publication_statuses = _bibo_get_default_publication_statuses();
-      $item_output = $publication_statuses[$item['status']];
-      if ($item['status'] == 'published') {
-        $item_output .= empty($item['year']) ? '' : ' (' . $item['year'];
+      if ($item['status'] == 'published' && isset($item['year'])) {
+        $item_output = $item['year'];
         $item_output .= empty($item['month']) ? '' : '-' . $item['month'];
         $item_output .= empty($item['day']) ? '' : '-' . $item['day'];
-        $item_output .= ')';
+      }
+      else {
+        $item_output = $publication_statuses[$item['status']];
       }
       $element[$delta]['bibo_publication_status_row']['content'] = array(
         '#markup' => $item_output,
