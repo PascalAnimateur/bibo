@@ -161,3 +161,30 @@ function _bibo_get_work_types($type_name = NULL) {
 
   return isset($type_name) ? reset($types) : $types;
 }
+
+/**
+ * Helper function to map work types to Bibliontology RDF.
+ */
+function _bibo_work_type_rdf_mapping($work_type) {
+  $rdf_mapping = array(
+    'book' => 'bibo:Book',
+    'book_section' => 'bibo:BookSection',
+    'conference_paper' => 'bibo:Article',
+    'journal_article' => 'bibo:AcademicArticle',
+    'magazine_article' => 'bibo:Article',
+    'newspaper_article' => 'bibo:Article',
+    'presentation' => 'bibo:Slideshow',
+    'report' => 'bibo:Report',
+    'thesis' => 'bibo:Thesis',
+  );
+
+  if (isset($rdf_mapping[$work_type])) {
+    return $rdf_mapping[$work_type];
+  }
+  else {
+    // Try to guess by converting to CamelCase.
+    return 'bibo:' . ucfirst(preg_replace_callback('/_(.?)/', function($matches) {
+      return ucfirst($matches[1]);
+    }, $work_type));
+  }
+}

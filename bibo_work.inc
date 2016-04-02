@@ -50,6 +50,12 @@ class BIBOWorkController extends EntityAPIController {
    * Build content for rendering work entity.
    */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+    // Populate Bibliontology RDF mapping from work type.
+    if (isset($entity->rdf_mapping)) {
+      $entity->rdf_mapping['rdftype'] = _bibo_work_type_rdf_mapping($entity->type);
+    }
+
+    // Prepare render array for APA reference view mode.
     if ($view_mode == 'apa') {
       $build = array(
         '#view_mode' => $view_mode,
