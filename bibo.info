@@ -12,6 +12,7 @@ dependencies[] = list
 dependencies[] = name
 dependencies[] = number
 dependencies[] = options
+dependencies[] = rdf
 dependencies[] = views
 dependencies[] = views_bulk_operations
 

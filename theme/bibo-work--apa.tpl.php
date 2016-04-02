@@ -7,5 +7,6 @@
  * - $title: The (sanitized) entity label.
  */
 ?>
-
-<?php print $contributors; ?>. (<?php print $publication_status; ?>). <strong><?php print $title; ?></strong>.
+<div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+  <strong><?php print $title; ?></strong>
+</div>

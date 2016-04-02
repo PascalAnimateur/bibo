@@ -1187,7 +1187,10 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
 function bibo_preprocess_entity(&$variables) {
   // Preprocess work entity.
   if ($variables['entity_type'] == 'bibo_work') {
-    // Render all field values in individual variables.
+    // Detect generic bibo_work--apa.tpl.php template.
+    array_splice($variables['theme_hook_suggestions'], 1, 0,  'bibo_work__' . $variables['view_mode']);
+
+    // Render all field values in individual variables without 'bibo_' prefix.
     foreach ($variables['content'] as $field_name => $value) {
       $prefix = 'bibo_';
       if (substr($field_name, 0, strlen($prefix)) == $prefix) {
@@ -1216,6 +1219,15 @@ function bibo_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key]['type'] = 'module';
     }
   }
+}
+
+/**
+ * Implements hook_rdf_namespaces().
+ */
+function bibo_rdf_namespaces() {
+  return array(
+    'bibo' => 'http://purl.org/ontology/bibo/',
+  );
 }
 
 /**

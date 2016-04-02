@@ -261,54 +261,108 @@ function bibo_default_work_type_bundles() {
     'label' => 'Book',
     'description' => 'A written or printed work usually on sheets of paper fastened or bound together within covers.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:Book'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['book_section'] = array(
     'type' => 'book_section',
     'label' => 'Book section',
     'description' => 'A section of a book, like a chapter or preface.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:BookSection'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['conference_paper'] = array(
     'type' => 'conference_paper',
     'label' => 'Conference paper',
     'description' => 'A paper published in conference proceedings.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:AcademicArticle'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['journal_article'] = array(
     'type' => 'journal_article',
     'label' => 'Journal article',
     'description' => 'A paper on a specific topic from an issue or part of an academic journal or periodical.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:AcademicArticle'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['magazine_article'] = array(
     'type' => 'magazine_article',
     'label' => 'Magazine article',
     'description' => 'A non-research article directed at a readership that extends beyond the traditional research community.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:Article'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['newspaper_article'] = array(
     'type' => 'newspaper_article',
     'label' => 'Newspaper article',
     'description' => 'A written work published in a print or electronic newspaper.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:Article'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['presentation'] = array(
     'type' => 'presentation',
     'label' => 'Presentation',
     'description' => 'A spoken or non-written work presented at a conference.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:Slideshow'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['report'] = array(
     'type' => 'report',
     'label' => 'Report',
     'description' => 'A document describing an account or statement describing in detail an event, situation, or the like, usually as the result of observation, inquiry, etc.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:Report'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
   $bundles['thesis'] = array(
     'type' => 'thesis',
     'label' => 'Thesis',
     'description' => 'A document created to summarize research findings associated with the completion of an academic degree.',
     'is_new' => TRUE,
+    'rdf_mapping' => array(
+      'rdftype' => array('bibo:Thesis'),
+      'title' => array(
+        'predicates' => array('dc:title'),
+      ),
+    ),
   );
 
   return $bundles;
