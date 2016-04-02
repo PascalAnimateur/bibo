@@ -126,7 +126,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -144,7 +144,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -200,7 +200,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -221,7 +221,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -478,7 +478,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 11,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -513,7 +513,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 11,
+      'weight' => 9,
     ),
   );
 
@@ -563,7 +563,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -637,7 +637,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -658,7 +658,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 12,
+      'weight' => 11,
     ),
   );
 
@@ -915,7 +915,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 11,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -950,7 +950,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 14,
+      'weight' => 9,
     ),
   );
 
@@ -1000,7 +1000,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1074,7 +1074,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1095,7 +1095,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 12,
+      'weight' => 11,
     ),
   );
 
@@ -1353,7 +1353,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 11,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1388,7 +1388,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 14,
+      'weight' => 9,
     ),
   );
 
@@ -1438,7 +1438,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1512,7 +1512,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1533,7 +1533,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -1723,7 +1723,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1758,7 +1758,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 12,
+      'weight' => 7,
     ),
   );
 
@@ -1808,7 +1808,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1882,7 +1882,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1903,7 +1903,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -2093,7 +2093,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2128,7 +2128,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 12,
+      'weight' => 7,
     ),
   );
 
@@ -2178,7 +2178,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 6,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2252,7 +2252,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2273,7 +2273,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 9,
+      'weight' => 8,
     ),
   );
 
@@ -2464,7 +2464,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 8,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2499,7 +2499,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 11,
+      'weight' => 6,
     ),
   );
 
@@ -2515,7 +2515,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2589,7 +2589,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 6,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2610,7 +2610,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -2762,7 +2762,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 7,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2797,7 +2797,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 10,
+      'weight' => 5,
     ),
   );
 
@@ -2813,7 +2813,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2887,7 +2887,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2908,7 +2908,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 11,
+      'weight' => 10,
     ),
   );
 
@@ -3162,7 +3162,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 10,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -3197,7 +3197,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 13,
+      'weight' => 8,
     ),
   );
 
@@ -3213,7 +3213,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -3287,7 +3287,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -3308,7 +3308,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -3528,7 +3528,7 @@ function bibo_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -3563,7 +3563,7 @@ function bibo_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 12,
+      'weight' => 7,
     ),
   );
 
@@ -3571,8 +3571,8 @@ function bibo_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Abstract');
   t('Book title');
-  t('Series title');
   t('Contributors');
+  t('Degree name');
   t('Edition');
   t('Full name');
   t('Full text');
@@ -3594,7 +3594,7 @@ function bibo_field_default_field_instances() {
   t('Publisher');
   t('Report number');
   t('Report type');
-  t('Degree name');
+  t('Series title');
   t('Thesis type');
   t('URL');
   t('University');
