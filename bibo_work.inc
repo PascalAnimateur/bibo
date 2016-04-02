@@ -56,18 +56,18 @@ class BIBOWorkController extends EntityAPIController {
       '#bundle' => $entity->type,
     );
 
-    if ($view_mode == 'full') {
-      // Get fields instances info ordered by widget weight.
-      $instances = field_info_instances('bibo_work', $entity->type);
-      uasort($instances, function($a, $b) {
-        $a_weight = (is_array($a) && isset($a['widget']['weight'])) ? $a['widget']['weight'] : 0;
-        $b_weight = (is_array($b) && isset($b['widget']['weight'])) ? $b['widget']['weight'] : 0;
-        if ($a_weight == $b_weight) {
-          return 0;
-        }
-        return ($a_weight < $b_weight) ? -1 : 1;
-      });
+    // Get fields instances info ordered by widget weight.
+    $instances = field_info_instances('bibo_work', $entity->type);
+    uasort($instances, function($a, $b) {
+      $a_weight = (is_array($a) && isset($a['widget']['weight'])) ? $a['widget']['weight'] : 0;
+      $b_weight = (is_array($b) && isset($b['widget']['weight'])) ? $b['widget']['weight'] : 0;
+      if ($a_weight == $b_weight) {
+        return 0;
+      }
+      return ($a_weight < $b_weight) ? -1 : 1;
+    });
 
+    if ($view_mode == 'full') {
       // Build rows (label, value) for the table display.
       $rows = array();
       foreach ($instances as $instance) {
@@ -90,6 +90,21 @@ class BIBOWorkController extends EntityAPIController {
         '#theme' => 'table',
         '#rows' => $rows,
       );
+    }
+    else if ($view_mode == 'apa') {
+      foreach ($instances as $instance) {
+        $value = '';
+        $items = $entity->$instance['field_name'];
+        if (isset($items[LANGUAGE_NONE])) {
+          foreach ($items[LANGUAGE_NONE] as $item) {
+            $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item);
+            $value .= drupal_render($render);
+          }
+          $build[$instance['field_name']] = array(
+            '#markup' => $value,
+          );
+        }
+      }
     }
 
     return $build;
@@ -144,7 +159,7 @@ class BIBOWorkUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       'title callback' => 'entity_ui_get_action_title',
       'title arguments' => array('add', $this->entityType),
-      'page callback' => 'bibo_work_bundle_add_page',
+      'page callback' => 'bibo_work_bundle_add_page_view',
       'page arguments' => array($this->entityType),
       'access callback' => 'entity_access',
       'access arguments' => array('create', $this->entityType),
@@ -269,16 +284,9 @@ function bibo_work_load_multiple($bibo_work_ids = array(), $conditions = array()
 }
 
 /**
- * Sets up content to show an individual work entity.
- */
-function bibo_work_page_view($entity, $view_mode = 'full') {
-  return entity_view('bibo_work', array($entity), $view_mode);
-}
-
-/**
  * Page callback for selecting the work type to be added.
  */
-function bibo_work_bundle_add_page($entity_type) {
+function bibo_work_bundle_add_page_view($entity_type) {
   module_load_include('inc', 'entity', 'includes/entity.ui');
   drupal_set_title(t('Select work type'));
 
@@ -303,6 +311,13 @@ function bibo_work_bundle_add_page($entity_type) {
   $output .= '</dl>';
 
   return $output;
+}
+
+/**
+ * Sets up content to show an individual work entity.
+ */
+function bibo_work_page_view($entity, $view_mode = 'full') {
+  return entity_view('bibo_work', array($entity), $view_mode);
 }
 
 /**

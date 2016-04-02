@@ -8,4 +8,4 @@
  */
 ?>
 
-<?php print $title; ?>
+<?php print $contributors; ?>. (<?php print $publication_status; ?>). <strong><?php print $title; ?></strong>.

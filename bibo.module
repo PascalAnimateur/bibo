@@ -1182,6 +1182,23 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
 }
 
 /**
+ * Implements hook_preprocess_entity().
+ */
+function bibo_preprocess_entity(&$variables) {
+  // Preprocess work entity.
+  if ($variables['entity_type'] == 'bibo_work') {
+    // Render all field values in individual variables.
+    foreach ($variables['content'] as $field_name => $value) {
+      $prefix = 'bibo_';
+      if (substr($field_name, 0, strlen($prefix)) == $prefix) {
+        $field_name = substr($field_name, strlen($prefix));
+      }
+      $variables[$field_name] = drupal_render($value);
+    }
+  }
+}
+
+/**
  * Implements hook_theme_registry_alter().
  */
 function bibo_theme_registry_alter(&$theme_registry) {
