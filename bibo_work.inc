@@ -78,13 +78,25 @@ class BIBOWorkController extends EntityAPIController {
         $value = '';
         $items = $entity->$instance['field_name'];
         if (isset($items[LANGUAGE_NONE])) {
+          $i = 0;
           foreach ($items[LANGUAGE_NONE] as $item) {
-            $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item);
-            $value .= drupal_render($render);
+            if ($instance['field_name'] == 'bibo_contributors') {
+              $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item, array(
+                'settings' => array(
+                  'display_link' => TRUE,
+                  'display_role' => FALSE,
+                  'name_format' => 'abbreviated_name',
+                ),
+              ));
+              $build[$item['bibo_contribution_role']][] = array('#markup' => ($i ? ', ' : '') . drupal_render($render));
+            }
+            else {
+              $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item);
+              $build[$instance['field_name']][] = array('#markup' => drupal_render($render));
+            }
+            $i++;
           }
-          $build[$instance['field_name']] = array(
-            '#markup' => $value,
-          );
+
         }
       }
     }

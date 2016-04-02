@@ -8,5 +8,5 @@
  */
 ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
-  <strong><?php print $title; ?></strong>
+  <?php print $author; ?> (<?php print $publication_status; ?>). <strong><?php print $title; ?>.</strong>
 </div>
