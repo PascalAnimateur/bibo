@@ -1191,13 +1191,30 @@ function bibo_preprocess_entity(&$variables) {
     // Detect generic bibo_work--apa.tpl.php template.
     array_splice($variables['theme_hook_suggestions'], 1, 0,  'bibo_work__' . $variables['view_mode']);
 
-    // Render all field values in individual variables without 'bibo_' prefix.
-    foreach ($variables['content'] as $field_name => $value) {
-      $prefix = 'bibo_';
-      if (substr($field_name, 0, strlen($prefix)) == $prefix) {
-        $field_name = substr($field_name, strlen($prefix));
+    // Append RDF mappings for title.
+    $variables['title_attributes_array'] = array('property' => 'dc:title');
+  }
+}
+
+/**
+ * Implements hook_field_attach_view_alter().
+ */
+function bibo_field_attach_view_alter(&$output, $context) {
+  // Append RDF mappings on displayed BIBO fields.
+  foreach (element_children($output) as $field_name) {
+    $element = &$output[$field_name];
+    foreach ($element['#items'] as $delta => $item) {
+      switch ($element['#field_name']) {
+        case 'bibo_publication_status':
+          $element[$delta]['#prefix'] = '<span property="dc:date">';
+          $element[$delta]['#suffix'] = '</span>';
+          break;
+
+        case 'bibo_publisher':
+          $element[$delta]['#prefix'] = '<span property="bibo:publisher">';
+          $element[$delta]['#suffix'] = '</span>';
+          break;
       }
-      $variables[$field_name] = drupal_render($value);
     }
   }
 }
