@@ -1214,6 +1214,11 @@ function bibo_field_attach_view_alter(&$output, $context) {
           $element[$delta]['#prefix'] = '<span property="bibo:publisher">';
           $element[$delta]['#suffix'] = '</span>';
           break;
+
+        case 'bibo_volume':
+          $element[$delta]['#prefix'] = '<span property="bibo:volume">';
+          $element[$delta]['#suffix'] = '</span>';
+          break;
       }
     }
   }
