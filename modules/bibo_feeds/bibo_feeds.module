@@ -90,9 +90,11 @@ function bibo_contribution_feeds_set_target(FeedsSource $source, $entity, $targe
     if (is_object($value) && $value instanceof FeedsElement) {
       $value = $value->getValue();
     }
-    $field[$language][] = array(
-      'bibo_contribution' => _bibo_contribution_process_value($value, $role),
-    );
+    if (!empty($value)) {
+      $field[$language][] = array(
+        'bibo_contribution' => _bibo_contribution_process_value($value, $role),
+      );
+    }
   }
   $entity->{$field_name} = $field;
 }
