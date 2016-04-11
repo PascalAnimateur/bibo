@@ -126,7 +126,6 @@ class BIBOContributorController extends EntityAPIController {
         }
       }
     }
-    field_cache_clear();
     return parent::delete($ids);
   }
 }
