@@ -11,6 +11,15 @@ function bibo_feeds_ctools_plugin_api() {
 }
 
 /**
+ * Implements hook_ctools_plugin_directory().
+ */
+function bibo_feeds_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'feeds_tamper') {
+    return 'plugins';
+  }
+}
+
+/**
  * Implements of hook_feeds_plugins().
  */
 function bibo_feeds_plugins() {
