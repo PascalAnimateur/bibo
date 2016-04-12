@@ -61,6 +61,15 @@ function feeds_tamper_convert_biblio_type_callback($result, $item_key, $element_
     '133' => 'webService',
     '134' => 'webProjectPage',
     '135' => 'presentation',
+    'Article de colloque' => 'conferencePaper',
+    'Article de journal' => 'newspaperArticle',
+    'Article de magazine' => 'magazineArticle',
+    'Article de revue' => 'journalArticle',
+    'Chapitre de livre' => 'bookSection',
+    'Communication' => 'presentation',
+    'Livre' => 'book',
+    'Rapport' => 'report',
+    'Thèse' => 'thesis',
   );
 
   $field = isset($biblio_type_mapping[$field]) ? $biblio_type_mapping[$field] : '';
