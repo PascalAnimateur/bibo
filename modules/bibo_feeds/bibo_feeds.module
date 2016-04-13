@@ -145,17 +145,17 @@ function _bibo_publication_status_process_value($value) {
   );
 
   // Process statuses other than 'published'.
-  $submitted = array('submitted', 'soumis');
+  $submitted = array('draft', 'submitted', 'soumis');
   $accepted = array('accepted', 'accepté');
-  $in_press = array('in press', 'sous presse');
+  $in_press = array('forthcoming', 'in press', 'sous presse');
   if (in_array(strtolower($value), $submitted)) {
-    $publication_status['status'] = 'submitted';
+    $publication_status['status'] = 'draft';
   }
   else if (in_array(strtolower($value), $accepted)) {
     $publication_status['status'] = 'accepted';
   }
   else if (in_array(strtolower($value), $in_press)) {
-    $publication_status['status'] = 'in_press';
+    $publication_status['status'] = 'forthcoming';
   }
   else {
     // Process partial date formats Y[-m[-d]] and Y[/m[/d]].
