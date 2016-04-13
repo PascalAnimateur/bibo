@@ -1223,7 +1223,8 @@ function bibo_field_attach_view_alter(&$output, $context) {
 
         case 'bibo_publication_status':
           $status = $element['#items'][$delta]['status'];
-          $element[$delta]['#prefix'] = '<span property="bibo:status" rdf:resource="http://purl.org/ontology/bibo/status/' . $status . '" ></span>';
+          // FIXME: Is this the proper RDFa markup for bibo:status?
+          $element[$delta]['#prefix'] = '<span property="bibo:status" resource="http://purl.org/ontology/bibo/status/' . $status . '" ></span>';
           if ($status == 'published') {
             $element[$delta]['#prefix'] .= '<span property="dc:date">';
             $element[$delta]['#suffix'] = '</span>';
