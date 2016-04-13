@@ -382,9 +382,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 0,
-        'in_press' => 'in_press',
+        'forthcoming' => 'forthcoming',
         'published' => 'published',
-        'submitted' => 0,
+        'draft' => 0,
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -853,9 +853,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 0,
-        'in_press' => 'in_press',
+        'forthcoming' => 'forthcoming',
         'published' => 'published',
-        'submitted' => 0,
+        'draft' => 0,
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -1325,9 +1325,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 'accepted',
-        'in_press' => 0,
+        'forthcoming' => 0,
         'published' => 'published',
-        'submitted' => 'submitted',
+        'draft' => 'draft',
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -1763,9 +1763,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 'accepted',
-        'in_press' => 0,
+        'forthcoming' => 0,
         'published' => 'published',
-        'submitted' => 'submitted',
+        'draft' => 'draft',
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -2167,9 +2167,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 0,
-        'in_press' => 'in_press',
+        'forthcoming' => 'forthcoming',
         'published' => 'published',
-        'submitted' => 0,
+        'draft' => 0,
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -2605,9 +2605,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 0,
-        'in_press' => 'in_press',
+        'forthcoming' => 'forthcoming',
         'published' => 'published',
-        'submitted' => 0,
+        'draft' => 0,
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -2938,9 +2938,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 'accepted',
-        'in_press' => 0,
+        'forthcoming' => 0,
         'published' => 'published',
-        'submitted' => 'submitted',
+        'draft' => 'draft',
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -3273,9 +3273,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 0,
-        'in_press' => 'in_press',
+        'forthcoming' => 'forthcoming',
         'published' => 'published',
-        'submitted' => 0,
+        'draft' => 0,
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,
@@ -3707,9 +3707,9 @@ function bibo_field_default_field_instances() {
     'settings' => array(
       'allowed_statuses' => array(
         'accepted' => 0,
-        'in_press' => 0,
+        'forthcoming' => 0,
         'published' => 'published',
-        'submitted' => 0,
+        'draft' => 0,
         'unpublished' => 'unpublished',
       ),
       'user_register_form' => FALSE,

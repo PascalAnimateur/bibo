@@ -706,9 +706,9 @@ function _bibo_get_default_publication_statuses() {
   // Default publication statuses.
   $statuses = array(
     'published' => t('Published'),
-    'in_press' => t('In press'),
+    'forthcoming' => t('In press'),
     'accepted' => t('Accepted'),
-    'submitted' => t('Submitted'),
+    'draft' => t('Submittted'),
     'unpublished' => t('Unpublished'),
   );
 
@@ -1222,8 +1222,12 @@ function bibo_field_attach_view_alter(&$output, $context) {
           break;
 
         case 'bibo_publication_status':
-          $element[$delta]['#prefix'] = '<span property="dc:date">';
-          $element[$delta]['#suffix'] = '</span>';
+          $status = $element['#items'][$delta]['status'];
+          $element[$delta]['#prefix'] = '<span property="bibo:status" rdf:resource="http://purl.org/ontology/bibo/status/' . $status . '" ></span>';
+          if ($status == 'published') {
+            $element[$delta]['#prefix'] .= '<span property="dc:date">';
+            $element[$delta]['#suffix'] = '</span>';
+          }
           break;
 
         case 'bibo_publisher':
