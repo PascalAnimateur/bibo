@@ -1205,6 +1205,13 @@ function bibo_field_attach_view_alter(&$output, $context) {
     $element = &$output[$field_name];
     foreach ($element['#items'] as $delta => $item) {
       switch ($element['#field_name']) {
+        case 'bibo_abstract':
+          $element[$delta]['#prefix'] = '<span property="bibo:abstract">';
+          $element[$delta]['#suffix'] = '</span>';
+          // Convert newline to <br> for plaintext field.
+          $element[$delta]['#markup'] = nl2br($element[$delta]['#markup']);
+          break;
+
         case 'bibo_publication_status':
           $element[$delta]['#prefix'] = '<span property="dc:date">';
           $element[$delta]['#suffix'] = '</span>';
