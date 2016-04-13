@@ -1191,6 +1191,15 @@ function bibo_preprocess_entity(&$variables) {
     // Detect generic bibo_work--apa.tpl.php template.
     array_splice($variables['theme_hook_suggestions'], 1, 0,  'bibo_work__' . $variables['view_mode']);
 
+    // Prepend work type label to $variables['content'].
+    $work_type = _bibo_get_work_types($variables['bibo_work']->type);
+    $variables['content'] = array(
+      'work_type' => array(
+        '#markup' => '<h3>' . $work_type->label . '</h3>',
+        '#weight' => -10,
+      ),
+    ) + $variables['content'];
+    
     // Append RDF mappings for title.
     $variables['title_attributes_array'] = array('property' => 'dc:title');
   }
