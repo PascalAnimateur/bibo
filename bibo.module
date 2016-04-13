@@ -1221,6 +1221,23 @@ function bibo_field_attach_view_alter(&$output, $context) {
           $element[$delta]['#markup'] = nl2br($element[$delta]['#markup']);
           break;
 
+        case 'bibo_doi':
+          $element[$delta]['#prefix'] = '<span property="bibo:doi">';
+          $element[$delta]['#suffix'] = '</span>';
+          break;
+
+        case 'bibo_issue':
+          // TODO: Provide contextual RDFa markup for bibo_issue.
+          break;
+
+        case 'bibo_pages':
+          // TODO: Provide contextual RDFa markup for bibo_pages.
+          break;
+
+        case 'bibo_place':
+          // TODO: Provide contextual RDFa markup for bibo_place.
+          break;
+
         case 'bibo_publication_status':
           $status = $element['#items'][$delta]['status'];
           // FIXME: Is this the proper RDFa markup for bibo:status?
@@ -1233,6 +1250,19 @@ function bibo_field_attach_view_alter(&$output, $context) {
 
         case 'bibo_publisher':
           $element[$delta]['#prefix'] = '<span property="bibo:publisher">';
+          $element[$delta]['#suffix'] = '</span>';
+          break;
+        
+        case 'bibo_secondary_title':
+          // TODO: Provide contextual RDFa markup for bibo_secondary_title.
+          break;
+
+        case 'bibo_serial_number':
+          // TODO: Provide contextual RDFa markup for bibo_serial_number.
+          break;
+
+        case 'bibo_url':
+          $element[$delta]['#prefix'] = '<span property="bibo:uri">';
           $element[$delta]['#suffix'] = '</span>';
           break;
 
