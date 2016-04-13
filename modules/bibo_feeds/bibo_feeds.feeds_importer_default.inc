@@ -203,21 +203,28 @@ function bibo_feeds_feeds_importer_default() {
               'language' => 'und',
             ),
             28 => array(
+              'source' => 'DOI',
+              'target' => 'bibo_doi',
+              'unique' => FALSE,
+              'language' => 'und',
+            ),
+            29 => array(
               'source' => 'presentationType',
               'target' => 'bibo_presentation_type',
               'unique' => FALSE,
               'language' => 'und',
             ),
-            29 => array(
+            30 => array(
               'source' => 'reportType',
               'target' => 'bibo_report_type',
               'unique' => FALSE,
               'language' => 'und',
             ),
-            30 => array(
+            31 => array(
               'source' => 'thesisType',
               'target' => 'bibo_thesis_type',
               'unique' => FALSE,
+              'language' => 'und',
             ),
           ),
           'insert_new' => '1',
@@ -237,8 +244,6 @@ function bibo_feeds_feeds_importer_default() {
       'process_in_background' => 0,
     );
     $export['bibo_zotero'] = $feeds_importer;
-
-    
   }
 
   return $export;
