@@ -126,7 +126,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -197,11 +197,11 @@ function bibo_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 12,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -222,7 +222,7 @@ function bibo_field_default_field_instances() {
       'weight' => 10,
     ),
   );
-  
+
   // Exported field_instance: 'bibo_work-book-bibo_full_text'.
   $field_instances['bibo_work-book-bibo_full_text'] = array(
     'bundle' => 'book',
@@ -234,7 +234,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 11,
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -597,7 +597,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -615,7 +615,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -660,6 +660,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-book_section-bibo_doi'.
+  $field_instances['bibo_work-book_section-bibo_doi'] = array(
+    'bundle' => 'book_section',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 10,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-book_section-bibo_full_text'.
   $field_instances['bibo_work-book_section-bibo_full_text'] = array(
     'bundle' => 'book_section',
@@ -671,7 +705,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 11,
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -692,7 +726,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -1034,7 +1068,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1052,7 +1086,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -1097,6 +1131,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-conference_paper-bibo_doi'.
+  $field_instances['bibo_work-conference_paper-bibo_doi'] = array(
+    'bundle' => 'conference_paper',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 10,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-conference_paper-bibo_full_text'.
   $field_instances['bibo_work-conference_paper-bibo_full_text'] = array(
     'bundle' => 'conference_paper',
@@ -1108,7 +1176,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 11,
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1129,7 +1197,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -1472,7 +1540,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1490,7 +1558,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -1535,6 +1603,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-journal_article-bibo_doi'.
+  $field_instances['bibo_work-journal_article-bibo_doi'] = array(
+    'bundle' => 'journal_article',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-journal_article-bibo_full_text'.
   $field_instances['bibo_work-journal_article-bibo_full_text'] = array(
     'bundle' => 'journal_article',
@@ -1546,7 +1648,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1567,7 +1669,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -1842,7 +1944,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1860,7 +1962,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -1905,6 +2007,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-magazine_article-bibo_doi'.
+  $field_instances['bibo_work-magazine_article-bibo_doi'] = array(
+    'bundle' => 'magazine_article',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-magazine_article-bibo_full_text'.
   $field_instances['bibo_work-magazine_article-bibo_full_text'] = array(
     'bundle' => 'magazine_article',
@@ -1916,7 +2052,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -1937,7 +2073,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -2212,7 +2348,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2230,7 +2366,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -2275,6 +2411,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-newspaper_article-bibo_doi'.
+  $field_instances['bibo_work-newspaper_article-bibo_doi'] = array(
+    'bundle' => 'newspaper_article',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 7,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-newspaper_article-bibo_full_text'.
   $field_instances['bibo_work-newspaper_article-bibo_full_text'] = array(
     'bundle' => 'newspaper_article',
@@ -2286,7 +2456,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2307,7 +2477,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -2549,7 +2719,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 6,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2567,7 +2737,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -2612,6 +2782,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-presentation-bibo_doi'.
+  $field_instances['bibo_work-presentation-bibo_doi'] = array(
+    'bundle' => 'presentation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 6,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 6,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-presentation-bibo_full_text'.
   $field_instances['bibo_work-presentation-bibo_full_text'] = array(
     'bundle' => 'presentation',
@@ -2623,7 +2827,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2644,7 +2848,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -2847,7 +3051,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2865,7 +3069,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -2910,6 +3114,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-report-bibo_doi'.
+  $field_instances['bibo_work-report-bibo_doi'] = array(
+    'bundle' => 'report',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 9,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-report-bibo_full_text'.
   $field_instances['bibo_work-report-bibo_full_text'] = array(
     'bundle' => 'report',
@@ -2921,7 +3159,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -2942,7 +3180,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -3247,7 +3485,7 @@ function bibo_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -3265,7 +3503,7 @@ function bibo_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -3310,6 +3548,40 @@ function bibo_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'bibo_work-thesis-bibo_doi'.
+  $field_instances['bibo_work-thesis-bibo_doi'] = array(
+    'bundle' => 'thesis',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'bibo_work',
+    'field_name' => 'bibo_doi',
+    'label' => 'DOI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'bibo_work-thesis-bibo_full_text'.
   $field_instances['bibo_work-thesis-bibo_full_text'] = array(
     'bundle' => 'thesis',
@@ -3321,7 +3593,7 @@ function bibo_field_default_field_instances() {
         'module' => 'file',
         'settings' => array(),
         'type' => 'file_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'bibo_work',
@@ -3342,7 +3614,7 @@ function bibo_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'file_generic',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -3606,6 +3878,7 @@ function bibo_field_default_field_instances() {
   t('Abstract');
   t('Book title');
   t('Contributors');
+  t('DOI');
   t('Degree name');
   t('Edition');
   t('Full name');
@@ -3636,3 +3909,4 @@ function bibo_field_default_field_instances() {
 
   return $field_instances;
 }
+
