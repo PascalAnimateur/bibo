@@ -1,11 +1,13 @@
 form .field-name-bibo-volume,
 form .field-name-bibo-issue,
 form .field-name-bibo-pages,
-form .field-name-bibo-serial_number {
+form .field-name-bibo-serial_number,
+form .field-name-bibo-url {
   float: left;
   margin-right: 0.75em;
 }
 
-form .field-name-bibo-u {
+form .field-name-bibo-url,
+form .field-name-bibo-abstract {
   clear: left;
 }
