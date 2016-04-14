@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function bibo_citeproc_entity_info_alter(&$entity_info) {
+  $entity_info['bibo_work']['view callback'] = 'bibo_citeproc_view_callback';
+  $entity_info['bibo_work']['view modes']['citation'] = array(
+    'label' => t('Citation'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['bibo_work']['view modes']['reference'] = array(
+    'label' => t('Reference'),
+    'custom settings' => FALSE,
+  );
+}
+
+/**
+ * Helper function to intercept bibo_citeproc view modes.
+ */
+function bibo_citeproc_view_callback($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
+  // Don't interfere with default view mode.
+  if ($view_mode == 'default' || $view_mode == 'full') {
+    return entity_get_controller('bibo_work')->view($entities, $view_mode, $langcode, $page);
+  }
+  // Prepare citeproc view mode.
+  $entities = entity_key_array_by_property($entities, 'bibo_work_id');
+  field_attach_prepare_view('bibo_work', $entities, $view_mode);
+  entity_prepare_view('bibo_work', $entities);
+  $langcode = isset($langcode) ? $langcode : $GLOBALS['language_content']->language;
+
+  $view = array();
+  foreach ($entities as $entity) {
+    $build = array(
+      '#theme' => 'bibo_citeproc',
+      '#work' => $entity,
+      '#view_mode' => $view_mode,
+      '#language' => $langcode,
+    );
+    // Allow modules to modify the structured entity.
+    $key = isset($entity->bibo_work_id) ? $entity->bibo_work_id : NULL;
+    $view['bibo_work'][$key] = $build;
+  }
+  return $view;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bibo_citeproc_theme() {
+  return array(
+    'bibo_citeproc' => array(
+      'file' => 'bibo_citeproc.module',
+      'variables' => array(
+        'work' => '',
+        'view_mode' => '',
+        'language' => '',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements theme_HOOK().
+ */
+function theme_bibo_citeproc($variables) {
+
+  return 'BIBO CiteProc reference';
+}

@@ -1,0 +1,6 @@
+name = BIBO CiteProc
+description = Display BIBO works using CiteProc and the CSL specification.
+core = 7.x
+package = BIBO
+
+dependencies[] = bibo

@@ -50,59 +50,19 @@ class BIBOWorkController extends EntityAPIController {
    * Build content for rendering work entity.
    */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-    // Prepare render array for APA reference view mode.
-    if ($view_mode == 'apa') {
-      $build = array(
-        '#view_mode' => $view_mode,
-        '#entity_type' => 'bibo_work',
-        '#bundle' => $entity->type,
-      );
-
-      // Get fields instances info ordered by widget weight.
-      $instances = field_info_instances('bibo_work', $entity->type);
-      uasort($instances, function($a, $b) {
-        $a_weight = (is_array($a) && isset($a['widget']['weight'])) ? $a['widget']['weight'] : 0;
-        $b_weight = (is_array($b) && isset($b['widget']['weight'])) ? $b['widget']['weight'] : 0;
-        if ($a_weight == $b_weight) {
-          return 0;
-        }
-        return ($a_weight < $b_weight) ? -1 : 1;
-      });
-
-      foreach ($instances as $instance) {
-        $value = '';
-        $items = $entity->$instance['field_name'];
-        if (isset($items[LANGUAGE_NONE])) {
-          $i = 0;
-          foreach ($items[LANGUAGE_NONE] as $item) {
-            if ($instance['field_name'] == 'bibo_contributors') {
-              $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item, array(
-                'settings' => array(
-                  'display_link' => TRUE,
-                  'display_role' => FALSE,
-                  'name_format' => 'abbreviated_name',
-                ),
-              ));
-              $build[$item['bibo_contribution_role']][] = array('#markup' => ($i ? ', ' : '') . drupal_render($render));
-            }
-            else {
-              $render = field_view_value('bibo_work', $entity, $instance['field_name'], $item);
-              $build[$instance['field_name']][] = array('#markup' => drupal_render($render));
-            }
-            $i++;
-          }
-
-        }
-      }
-    }
-    else {
-      $build = parent::buildContent($entity, $view_mode, $langcode, $content);
-    }
+    $build = parent::buildContent($entity, $view_mode, $langcode, $content);
 
     // Populate Bibliontology RDF mapping from work type.
     if (isset($entity->rdf_mapping)) {
       $entity->rdf_mapping['rdftype'] = _bibo_work_type_rdf_mapping($entity->type);
     }
+
+    // Prepend work type label.
+    $work_type = _bibo_get_work_types($entity->type);
+    $build['work_type'] = array(
+      '#markup' => '<h3>' . $work_type->label . '</h3>',
+      '#weight' => -10,
+    );
 
     return $build;
   }

@@ -85,10 +85,6 @@ function bibo_entity_info() {
         'label' => t('Default'),
         'custom settings' => TRUE,
       ),
-      'apa' => array(
-        'label' => t('APA reference'),
-        'custom settings' => FALSE,
-      ),
     ),
     // Callbacks.
     'access callback' => 'bibo_work_access',
@@ -1188,18 +1184,6 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
 function bibo_preprocess_entity(&$variables) {
   // Preprocess work entity.
   if ($variables['entity_type'] == 'bibo_work') {
-    // Detect generic bibo_work--apa.tpl.php template.
-    array_splice($variables['theme_hook_suggestions'], 1, 0,  'bibo_work__' . $variables['view_mode']);
-
-    // Prepend work type label to $variables['content'].
-    $work_type = _bibo_get_work_types($variables['bibo_work']->type);
-    $variables['content'] = array(
-      'work_type' => array(
-        '#markup' => '<h3>' . $work_type->label . '</h3>',
-        '#weight' => -10,
-      ),
-    ) + $variables['content'];
-    
     // Append RDF mappings for title.
     $variables['title_attributes_array'] = array('property' => 'dc:title');
   }
@@ -1276,29 +1260,10 @@ function bibo_field_attach_view_alter(&$output, $context) {
 }
 
 /**
- * Implements hook_theme_registry_alter().
- */
-function bibo_theme_registry_alter(&$theme_registry) {
-  // Defined path to the current module.
-  $module_path = drupal_get_path('module', 'bibo');
-  // Find all .tpl.php files in this module's folder recursively.
-  $template_file_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
-  // Iterate through all found template file objects.
-  foreach ($template_file_objects as $key => $template_file_object) {
-    // If the template has not already been overridden by a theme.
-    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
-      // Alter the theme path and template elements.
-      $theme_registry[$key]['theme path'] = $module_path;
-      $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
-      $theme_registry[$key]['type'] = 'module';
-    }
-  }
-}
-
-/**
  * Implements hook_rdf_namespaces().
  */
 function bibo_rdf_namespaces() {
+  // Add bibo RDF namespace to page head.
   return array(
     'bibo' => 'http://purl.org/ontology/bibo/',
   );
