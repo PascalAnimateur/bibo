@@ -32,9 +32,8 @@ function bibo_apa_view_callback($entities, $view_mode = 'full', $langcode = NULL
   $view = array();
   foreach ($entities as $entity) {
     $build = array(
-      '#theme' => 'bibo_apa',
+      '#theme' => 'bibo_apa_' . $view_mode,
       '#entity' => $entity,
-      '#view_mode' => $view_mode,
       '#language' => $langcode,
     );
     // Allow modules to modify the structured entity.
@@ -49,12 +48,17 @@ function bibo_apa_view_callback($entities, $view_mode = 'full', $langcode = NULL
  */
 function bibo_apa_theme() {
   return array(
-    'bibo_apa' => array(
+    'bibo_apa_citation' => array(
       'file' => 'bibo_apa.module',
       'variables' => array(
         'entity' => '',
-        'build' => '',
-        'view_mode' => '',
+        'language' => '',
+      ),
+    ),
+    'bibo_apa_reference' => array(
+      'file' => 'bibo_apa.module',
+      'variables' => array(
+        'entity' => '',
         'language' => '',
       ),
     ),
@@ -64,23 +68,47 @@ function bibo_apa_theme() {
 /**
  * Implements theme_HOOK().
  */
-function theme_bibo_apa($variables) {
+function theme_bibo_apa_citation($variables) {
   $entity = $variables['entity'];
+  $output = '(';
 
-  $authors = _bibo_apa_get_contributors_by_role($entity, 'author');
-  
-  return 'BIBO APA reference';
-}
-
-function _bibo_apa_get_contributors_by_role($entity, $role) {
-  $contributors = array();
-
+  // Build list of authors (last name or organization name).
+  $authors = array();
   if (isset($entity->bibo_contributors[LANGUAGE_NONE])) {
     foreach ($entity->bibo_contributors[LANGUAGE_NONE] as $contributor) {
-      if ($contributor['bibo_contribution_role'] == $role)
-        $contributors[] = $contributor;
+      if ($contributor['bibo_contribution_role'] == 'author') {
+        $author = bibo_contributor_load($contributor['bibo_contributor_id']);
+        if ($author->type == 'person') {
+          $authors[] = $author->bibo_full_name[LANGUAGE_NONE][0]['family'];
+        }
+        else {
+          $authors[] = $author->name;
+        }
+      }
+    }
+    $output .= implode(', ', $authors);
+    if (!empty($authors)){
+      $output .= ', ';
     }
   }
 
-  return $contributors;
+  // Get publication status / year.
+  $year = '';
+  if (isset($entity->bibo_publication_status[LANGUAGE_NONE])) {
+    $year = $entity->bibo_publication_status[LANGUAGE_NONE][0]['year'];
+    if (!$year) {
+      $year = _bibo_get_default_publication_statuses($entity->bibo_publication_status[LANGUAGE_NONE][0]['status']);
+    }
+  }
+  $output .= $year;
+
+  return $output . ')';
+}
+
+function theme_bibo_apa_reference($variables) {
+  $entity = $variables['entity'];
+
+  // TODO: Render work APA reference.
+
+  return 'BIBO APA reference';
 }

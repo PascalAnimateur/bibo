@@ -698,7 +698,7 @@ function _bibo_get_default_contribution_roles() {
 /**
  * Helper function to get list of default publication statuses.
  */
-function _bibo_get_default_publication_statuses() {
+function _bibo_get_default_publication_statuses($status = '') {
   // Default publication statuses.
   $statuses = array(
     'published' => t('Published'),
@@ -708,6 +708,8 @@ function _bibo_get_default_publication_statuses() {
     'unpublished' => t('Unpublished'),
   );
 
+  if (!empty($status) && isset($statuses[$status]))
+    return $statuses[$status];
   return $statuses;
 }
 
