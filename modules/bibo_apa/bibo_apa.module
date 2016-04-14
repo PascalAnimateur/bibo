@@ -3,8 +3,8 @@
 /**
  * Implements hook_entity_info_alter().
  */
-function bibo_citeproc_entity_info_alter(&$entity_info) {
-  $entity_info['bibo_work']['view callback'] = 'bibo_citeproc_view_callback';
+function bibo_apa_entity_info_alter(&$entity_info) {
+  $entity_info['bibo_work']['view callback'] = 'bibo_apa_view_callback';
   $entity_info['bibo_work']['view modes']['citation'] = array(
     'label' => t('Citation'),
     'custom settings' => FALSE,
@@ -16,14 +16,14 @@ function bibo_citeproc_entity_info_alter(&$entity_info) {
 }
 
 /**
- * Helper function to intercept bibo_citeproc view modes.
+ * Helper function to intercept bibo_apa view modes.
  */
-function bibo_citeproc_view_callback($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
+function bibo_apa_view_callback($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
   // Don't interfere with default view mode.
   if ($view_mode == 'default' || $view_mode == 'full') {
     return entity_get_controller('bibo_work')->view($entities, $view_mode, $langcode, $page);
   }
-  // Prepare citeproc view mode.
+  // Prepare APA view mode.
   $entities = entity_key_array_by_property($entities, 'bibo_work_id');
   field_attach_prepare_view('bibo_work', $entities, $view_mode);
   entity_prepare_view('bibo_work', $entities);
@@ -32,8 +32,8 @@ function bibo_citeproc_view_callback($entities, $view_mode = 'full', $langcode =
   $view = array();
   foreach ($entities as $entity) {
     $build = array(
-      '#theme' => 'bibo_citeproc',
-      '#work' => $entity,
+      '#theme' => 'bibo_apa',
+      '#entity' => $entity,
       '#view_mode' => $view_mode,
       '#language' => $langcode,
     );
@@ -47,12 +47,13 @@ function bibo_citeproc_view_callback($entities, $view_mode = 'full', $langcode =
 /**
  * Implements hook_theme().
  */
-function bibo_citeproc_theme() {
+function bibo_apa_theme() {
   return array(
-    'bibo_citeproc' => array(
-      'file' => 'bibo_citeproc.module',
+    'bibo_apa' => array(
+      'file' => 'bibo_apa.module',
       'variables' => array(
-        'work' => '',
+        'entity' => '',
+        'build' => '',
         'view_mode' => '',
         'language' => '',
       ),
@@ -63,7 +64,23 @@ function bibo_citeproc_theme() {
 /**
  * Implements theme_HOOK().
  */
-function theme_bibo_citeproc($variables) {
+function theme_bibo_apa($variables) {
+  $entity = $variables['entity'];
 
-  return 'BIBO CiteProc reference';
+  $authors = _bibo_apa_get_contributors_by_role($entity, 'author');
+  
+  return 'BIBO APA reference';
+}
+
+function _bibo_apa_get_contributors_by_role($entity, $role) {
+  $contributors = array();
+
+  if (isset($entity->bibo_contributors[LANGUAGE_NONE])) {
+    foreach ($entity->bibo_contributors[LANGUAGE_NONE] as $contributor) {
+      if ($contributor['bibo_contribution_role'] == $role)
+        $contributors[] = $contributor;
+    }
+  }
+
+  return $contributors;
 }

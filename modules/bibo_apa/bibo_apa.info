@@ -1,0 +1,6 @@
+name = BIBO APA
+description = Display BIBO works as citation or reference using APA specification.
+core = 7.x
+package = BIBO
+
+dependencies[] = bibo
