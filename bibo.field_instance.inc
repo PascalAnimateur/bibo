@@ -160,7 +160,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -631,7 +631,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -1102,7 +1102,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -1574,7 +1574,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -1978,7 +1978,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -2382,7 +2382,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -2753,7 +2753,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -3085,7 +3085,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
@@ -3519,7 +3519,7 @@ function bibo_field_default_field_instances() {
         'settings' => array(
           'display_link' => TRUE,
           'display_role' => TRUE,
-          'name_format' => 'full_name',
+          'name_format' => 'last_first',
         ),
         'type' => 'bibo_contribution_formatter_default',
         'weight' => 0,
