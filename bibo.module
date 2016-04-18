@@ -1127,11 +1127,11 @@ function bibo_field_formatter_settings_summary($field, $instance, $view_mode) {
  */
 function _bibo_get_default_name_formats($name_format = '') {
   $name_formats = array(
-    'BIBO_NAME_FORMAT_F_LAST' => t('F. Last'),
-    'BIBO_NAME_FORMAT_FIRST_LAST' => t('First Last'),
-    'BIBO_NAME_FORMAT_LAST_F' => t('Last, F.'),
-    'BIBO_NAME_FORMAT_LAST_FIRST' => t('Last, First'),
-    'BIBO_NAME_FORMAT_LAST' => t('Last'),
+    BIBO_NAME_FORMAT_F_LAST => t('F. Last'),
+    BIBO_NAME_FORMAT_FIRST_LAST => t('First Last'),
+    BIBO_NAME_FORMAT_LAST_F => t('Last, F.'),
+    BIBO_NAME_FORMAT_LAST_FIRST => t('Last, First'),
+    BIBO_NAME_FORMAT_LAST => t('Last'),
   );
 
   if (isset($name_formats[$name_format])) {
