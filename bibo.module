@@ -14,6 +14,14 @@ define('BIBO_NAME_FORMAT_LAST_F', 'last_f');
 define('BIBO_NAME_FORMAT_LAST_FIRST', 'last_first');
 
 /**
+ * Date formats for publication status.
+ */
+define('BIBO_DATE_FORMAT_FULL', 'bibo_full');
+define('BIBO_DATE_FORMAT_YEAR', 'bibo_year');
+define('BIBO_DATE_FORMAT_YEAR_MONTH', 'bibo_year_month');
+define('BIBO_DATE_FORMAT_STATUS', 'bibo_status');
+
+/**
  * Implements hook_entity_info().
  */
 function bibo_entity_info() {
@@ -1045,6 +1053,69 @@ function bibo_multivalue_item_remove_element(&$element, &$form_state, $field_nam
 }
 
 /**
+ * Helper function to get list name format labels.
+ */
+function _bibo_get_default_name_formats($name_format = '') {
+  $name_formats = array(
+    BIBO_NAME_FORMAT_F_LAST => t('F. Last'),
+    BIBO_NAME_FORMAT_FIRST_LAST => t('First Last'),
+    BIBO_NAME_FORMAT_LAST_F => t('Last, F.'),
+    BIBO_NAME_FORMAT_LAST_FIRST => t('Last, First'),
+    BIBO_NAME_FORMAT_LAST => t('Last'),
+  );
+
+  if (isset($name_formats[$name_format])) {
+    return $name_formats[$name_format];
+  }
+
+  return $name_formats;
+}
+
+/**
+ * Implements hook_date_formats().
+ */
+function bibo_date_formats() {
+  return array(
+    array(
+      'type' => BIBO_DATE_FORMAT_FULL,
+      'format' => 'Y, j F',
+      'locales' => array('fr'),
+    ),
+    array(
+      'type' => BIBO_DATE_FORMAT_FULL,
+      'format' => 'Y, F j',
+      'locales' => array('en'),
+    ),
+    array(
+      'type' => BIBO_DATE_FORMAT_YEAR,
+      'format' => 'Y',
+    ),
+    array(
+      'type' => BIBO_DATE_FORMAT_YEAR_MONTH,
+      'format' => 'Y, F',
+    ),
+  );
+}
+
+/**
+ * Helper function to get list date format labels.
+ */
+function _bibo_get_default_date_formats($date_format = '') {
+  $date_formats = array(
+    BIBO_DATE_FORMAT_FULL => t('Full date'),
+    BIBO_DATE_FORMAT_YEAR => t('Year only'),
+    BIBO_DATE_FORMAT_YEAR_MONTH => t('Year, month'),
+    BIBO_DATE_FORMAT_STATUS => t('Status only'),
+  );
+
+  if (isset($date_formats[$date_format])) {
+    return $date_formats[$date_format];
+  }
+
+  return $date_formats;
+}
+
+/**
  * Implements hook_field_formatter_info().
  */
 function bibo_field_formatter_info() {
@@ -1065,6 +1136,9 @@ function bibo_field_formatter_info() {
   $formatter_info['bibo_publication_status_formatter_default'] = array(
     'label' => t('Default'),
     'field types' => array('bibo_publication_status'),
+    'settings' => array(
+      'date_format' => BIBO_DATE_FORMAT_FULL,
+    ),
   );
 
   return $formatter_info;
@@ -1101,6 +1175,17 @@ function bibo_field_formatter_settings_form($field, $instance, $view_mode, $form
     );
   }
 
+  // Publication status default formatter settings form.
+  if ($display['type'] == 'bibo_publication_status_formatter_default') {
+    // Date format
+    $element['date_format'] = array(
+      '#title' => t('Date format'),
+      '#type' => 'select',
+      '#options' => _bibo_get_default_date_formats(),
+      '#default_value' => $settings['date_format'],
+    );
+  }
+
   return $element;
 }
 
@@ -1119,26 +1204,12 @@ function bibo_field_formatter_settings_summary($field, $instance, $view_mode) {
     $summary[] = $settings['display_role'] ? t('Display role') : t('Hide role');
   }
 
-  return implode('<br />', $summary);
-}
-
-/**
- * Helper function to get list name format labels.
- */
-function _bibo_get_default_name_formats($name_format = '') {
-  $name_formats = array(
-    BIBO_NAME_FORMAT_F_LAST => t('F. Last'),
-    BIBO_NAME_FORMAT_FIRST_LAST => t('First Last'),
-    BIBO_NAME_FORMAT_LAST_F => t('Last, F.'),
-    BIBO_NAME_FORMAT_LAST_FIRST => t('Last, First'),
-    BIBO_NAME_FORMAT_LAST => t('Last'),
-  );
-
-  if (isset($name_formats[$name_format])) {
-    return $name_formats[$name_format];
+  // Contribution default formatter settings summary.
+  if ($display['type'] == 'bibo_publication_status_formatter_default') {
+    $summary[] = 'Date format: ' . _bibo_get_default_date_formats($settings['date_format']);
   }
 
-  return $name_formats;
+  return implode('<br />', $summary);
 }
 
 /**
@@ -1175,14 +1246,27 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
   // Publication status default formatter view.
   if ($display['type'] == 'bibo_publication_status_formatter_default') {
     foreach ($items as $delta => $item) {
-      $publication_statuses = _bibo_get_default_publication_statuses();
-      if ($item['status'] == 'published' && isset($item['year'])) {
-        $item_output = $item['year'];
-        $item_output .= empty($item['month']) ? '' : '-' . $item['month'];
-        $item_output .= empty($item['day']) ? '' : '-' . $item['day'];
-      }
-      else {
-        $item_output = $publication_statuses[$item['status']];
+      switch($display['settings']['date_format']) {
+        case BIBO_DATE_FORMAT_FULL:
+          if (!empty($item['day'])) {
+            $date = mktime(0, 0, 0, $item['month'], $item['day'], $item['year']);
+            $item_output = format_date($date, $display['settings']['date_format']);
+            break;
+          }
+        case BIBO_DATE_FORMAT_YEAR_MONTH:
+          if (!empty($item['month'])) {
+            $month_names = date_month_names();
+            $item_output = $item['year'] . ', ' . $month_names[$item['month']];
+            break;
+          }
+        case BIBO_DATE_FORMAT_YEAR:
+          if (!empty($item['month'])) {
+            $item_output = $item['year'];
+            break;
+          }
+        case BIBO_DATE_FORMAT_STATUS:
+        default:
+          $item_output = _bibo_get_default_publication_statuses($item['status']);
       }
       $element[$delta]['bibo_publication_status_row']['content'] = array(
         '#markup' => $item_output,
