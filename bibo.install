@@ -28,7 +28,7 @@ function bibo_schema() {
           'default' => '',
         ),
         'name' => array(
-          'description' => 'The label of the contributor as displayed in a reference (i.e. abbreviated given name).',
+          'description' => 'The name of the contributor.',
           'type' => 'varchar',
           'length' => 255,
           'not null' => TRUE,

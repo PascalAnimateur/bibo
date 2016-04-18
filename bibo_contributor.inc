@@ -181,8 +181,8 @@ class BIBOContributorMetadataController extends EntityDefaultMetadataController 
     $info = parent::entityPropertyInfo();
     $properties = &$info[$this->type]['properties'];
 
-    $properties['name']['label'] = t('Contributor Label');
-    $properties['name']['description'] = t('The label of the contributor as displayed in a reference (i.e. abbreviated given name).');
+    $properties['name']['label'] = t('Contributor name');
+    $properties['name']['description'] = t('The name of the contributor.');
 
     $properties['created']['type'] = 'date';
     $properties['created']['description'] = t('The Unix timestamp when the contributor was created.');
@@ -346,12 +346,33 @@ function bibo_contributor_access($op, $entity = NULL, $account = NULL) {
 /**
  * Label callback for the contributor entity.
  */
-function bibo_contributor_label($entity, $entity_type = 'bibo_contributor') {
+function bibo_contributor_label($entity, $entity_type = 'bibo_contributor', $name_format = BIBO_NAME_FORMAT_LAST_FIRST) {
   $label = t('Unknown contributor');
 
   if ($entity->type == 'person') {
-    $label = $entity->wrapper()->bibo_full_name->value();
-    $label = $label['family'] . ', ' . $label['given'];
+    $full_name = $entity->wrapper()->bibo_full_name->value();
+    switch ($name_format) {
+      case BIBO_NAME_FORMAT_F_LAST:
+        $label = drupal_substr($full_name['given'], 0, 1) . '.' . ' ' . $full_name['family'];
+        break;
+
+      case BIBO_NAME_FORMAT_FIRST_LAST:
+        $label = $full_name['given'] . ' ' . $full_name['family'];
+        break;
+
+      case BIBO_NAME_FORMAT_LAST:
+        $label = $full_name['family'];
+        break;
+
+      case BIBO_NAME_FORMAT_LAST_F:
+        $label = $full_name['family'] . ', ' . drupal_substr($full_name['given'], 0, 1) . '.';
+        break;
+
+      case BIBO_NAME_FORMAT_LAST_FIRST:
+      default:
+        $label = $full_name['family'] . ', ' . $full_name['given'];
+        break;
+    }
   }
   else {
     $label = $entity->name;

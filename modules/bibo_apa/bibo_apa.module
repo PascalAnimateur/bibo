@@ -72,8 +72,8 @@ function theme_bibo_apa_citation($variables) {
   $entity = $variables['entity'];
   $output = '(';
 
-  // Build list of authors (last name or organization name).
-  $output .= _bibo_apa_format_contributors($entity, 'author', 'last');
+  // Build list of authors (last name only).
+  $output .= _bibo_apa_format_contributors($entity, 'author', BIBO_NAME_FORMAT_LAST);
 
   // Append publication status / partial date.
   $output .= ', ' . _bibo_apa_format_publication_status($entity, 'Y');
@@ -92,7 +92,7 @@ function theme_bibo_apa_reference($variables) {
 /**
  * Helper function to format a list of contributors.
  */
-function _bibo_apa_format_contributors($entity, $role, $name_format = 'last_only') {
+function _bibo_apa_format_contributors($entity, $role, $name_format = BIBO_NAME_FORMAT_LAST_F) {
   $output = '';
   
   $contributors = array();
@@ -101,12 +101,7 @@ function _bibo_apa_format_contributors($entity, $role, $name_format = 'last_only
     foreach ($entity->bibo_contributors[LANGUAGE_NONE] as $contributor) {
       if ($contributor['bibo_contribution_role'] == $role) {
         $contributor = bibo_contributor_load($contributor['bibo_contributor_id']);
-        if ($contributor->type == 'person') {
-          $contributors[] = $contributor->bibo_full_name[LANGUAGE_NONE][0]['family'];
-        }
-        else {
-          $contributors[] = $contributor->name;
-        }
+        $contributors[] = bibo_contributor_label($contributor, 'bibo_contributor', $name_format);
       }
     }
     // Format list of contributors.

@@ -5,6 +5,15 @@
  */
 
 /**
+ * Name formats for person contributors.
+ */
+define('BIBO_NAME_FORMAT_F_LAST', 'f_last');
+define('BIBO_NAME_FORMAT_FIRST_LAST', 'first_last');
+define('BIBO_NAME_FORMAT_LAST', 'last');
+define('BIBO_NAME_FORMAT_LAST_F', 'last_f');
+define('BIBO_NAME_FORMAT_LAST_FIRST', 'last_first');
+
+/**
  * Implements hook_entity_info().
  */
 function bibo_entity_info() {
@@ -1046,7 +1055,7 @@ function bibo_field_formatter_info() {
     'label' => t('Default'),
     'field types' => array('bibo_contribution'),
     'settings' => array(
-      'name_format' => 'full_name',
+      'name_format' => BIBO_NAME_FORMAT_LAST_FIRST,
       'display_link' => TRUE,
       'display_role' => TRUE,
     ),
@@ -1075,10 +1084,7 @@ function bibo_field_formatter_settings_form($field, $instance, $view_mode, $form
     $element['name_format'] = array(
       '#title' => t('Name format'),
       '#type' => 'select',
-      '#options' => array(
-        'abbreviated_name' => t('Abbreviated name'),
-        'full_name' => t('Full name'),
-      ),
+      '#options' => _bibo_get_default_name_formats(),
       '#default_value' => $settings['name_format'],
     );
     // Link to contributor.
@@ -1108,16 +1114,31 @@ function bibo_field_formatter_settings_summary($field, $instance, $view_mode) {
 
   // Contribution default formatter settings summary.
   if ($display['type'] == 'bibo_contribution_formatter_default') {
-    $name_formats = array(
-      'abbreviated_name' => t('Abbreviated name'),
-      'full_name' => t('Full name'),
-    );
-    $summary[] = 'Name format: ' . $name_formats[$settings['name_format']];
+    $summary[] = 'Name format: ' . _bibo_get_default_name_formats($settings['name_format']);
     $summary[] = $settings['display_link'] ? t('Display link') : t('No link');
     $summary[] = $settings['display_role'] ? t('Display role') : t('Hide role');
   }
 
   return implode('<br />', $summary);
+}
+
+/**
+ * Helper function to get list name format labels.
+ */
+function _bibo_get_default_name_formats($name_format = '') {
+  $name_formats = array(
+    'BIBO_NAME_FORMAT_F_LAST' => t('F. Last'),
+    'BIBO_NAME_FORMAT_FIRST_LAST' => t('First Last'),
+    'BIBO_NAME_FORMAT_LAST_F' => t('Last, F.'),
+    'BIBO_NAME_FORMAT_LAST_FIRST' => t('Last, First'),
+    'BIBO_NAME_FORMAT_LAST' => t('Last'),
+  );
+
+  if (isset($name_formats[$name_format])) {
+    return $name_formats[$name_format];
+  }
+
+  return $name_formats;
 }
 
 /**
@@ -1134,15 +1155,7 @@ function bibo_field_formatter_view($entity_type, $entity, $field, $instance, $la
       $bibo_contributor = entity_load('bibo_contributor', array($id));
       if (!empty($bibo_contributor)) {
         // Name format.
-        switch ($display['settings']['name_format']) {
-          case 'abbreviated_name':
-            $item_output = $bibo_contributor[$id]->name;
-            break;
-          case 'complete_name':
-          default:
-            $item_output = bibo_contributor_label($bibo_contributor[$id]);
-            break;
-        }
+        $item_output = bibo_contributor_label($bibo_contributor[$id], 'bibo_contributor', $display['settings']['name_format']);
         // Link to contributor.
         if ($display['settings']['display_link']) {
           $item_output = l($item_output, entity_uri('bibo_contributor', $bibo_contributor[$id])['path']);
