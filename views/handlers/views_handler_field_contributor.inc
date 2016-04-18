@@ -24,7 +24,13 @@ class views_handler_field_contributor extends views_handler_field {
 
   function option_definition() {
     $options = parent::option_definition();
-    $options['link_to_contributor'] = array('default' => isset($this->definition['link_to_contributor default']) ? $this->definition['link_to_contributor default'] : FALSE, 'bool' => TRUE);
+    $options['name_format'] = array(
+      'default' => isset($this->definition['name_format default']) ? $this->definition['name_format default'] : FALSE,
+    );
+    $options['link_to_contributor'] = array(
+      'default' => isset($this->definition['link_to_contributor default']) ? $this->definition['link_to_contributor default'] : FALSE,
+      'bool' => TRUE
+    );
     return $options;
   }
 
@@ -32,6 +38,12 @@ class views_handler_field_contributor extends views_handler_field {
    * Provide link to node option
    */
   function options_form(&$form, &$form_state) {
+    $form['name_format'] = array(
+      '#title' => t('Name format'),
+      '#type' => 'select',
+      '#options' => _bibo_get_default_name_formats(),
+      '#default_value' => isset($this->options['name_format']) ? $this->options['name_format'] : BIBO_NAME_FORMAT_LAST_FIRST,
+    );
     $form['link_to_contributor'] = array(
       '#title' => t('Link this field to the original contributor'),
       '#description' => t("Enable to override this field's links."),
@@ -62,7 +74,8 @@ class views_handler_field_contributor extends views_handler_field {
   }
 
   function render($values) {
-    $value = $this->get_value($values);
-    return $this->render_link($this->sanitize_value($value), $values);
+    $name_format = isset($this->options['name_format']) ? $this->options['name_format'] : BIBO_NAME_FORMAT_LAST_FIRST;
+    $name = bibo_contributor_label(bibo_contributor_load($values->bibo_contributor_id), 'bibo_contributor', $name_format);
+    return $this->render_link($this->sanitize_value($name), $values);
   }
 }

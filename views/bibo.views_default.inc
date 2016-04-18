@@ -128,11 +128,12 @@ function bibo_views_default_views() {
       ),
     ),
   );
-  /* Field: Contributor: Contributor Label */
+  /* Field: Contributor: Contributor name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'bibo_contributor';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['label'] = 'Contributor';
+  $handler->display->display_options['fields']['name']['name_format'] = 'last_first';
   /* Field: Contributor: Type */
   $handler->display->display_options['fields']['type']['id'] = 'type';
   $handler->display->display_options['fields']['type']['table'] = 'bibo_contributor';
@@ -164,7 +165,7 @@ function bibo_views_default_views() {
   $handler->display->display_options['fields']['delete_link']['label'] = '';
   $handler->display->display_options['fields']['delete_link']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['delete_link']['text'] = 'delete';
-  /* Filter criterion: Contributor: Contributor Label */
+  /* Filter criterion: Contributor: Contributor name */
   $handler->display->display_options['filters']['name']['id'] = 'name';
   $handler->display->display_options['filters']['name']['table'] = 'bibo_contributor';
   $handler->display->display_options['filters']['name']['field'] = 'name';
