@@ -44,8 +44,10 @@ class BIBOContributorController extends EntityAPIController {
     if (empty($values['type'])) {
       $parts = explode(',', $values['name']);
       if (sizeof($parts) == 2) {
+        // Person is detected only for names containing one comma.
         $values['type'] = 'person';
         // Update name property so that given name is abbreviated.
+        // Storing abbreviated names allows easier contributor matching.
         $values['name'] = _bibo_contributor_abbreviate_person_name(trim($parts[0]), trim($parts[1]));
       }
       else {
@@ -712,43 +714,31 @@ function bibo_contributor_redirect_merge($entity) {
 }
 
 /**
- * Helper function to find existing contributor(s) or create a new one.
+ * Helper function to find existing contributor(s) or create a new one from name.
  */
 function _bibo_contributor_find_or_create($name) {
   $contributor_ids = array();
   $parts = explode(',', $name);
 
-  // Find person contributor(s) using full name.
-  if (sizeof($parts) == 2) {
-    $query = new EntityFieldQuery;
-    $result = $query->entityCondition('entity_type', 'bibo_contributor')
-      ->fieldCondition('bibo_full_name', 'family', trim($parts[1]), '=')
-      ->fieldCondition('bibo_full_name', 'given', trim($parts[1]), '=')
-      ->execute();
-    if (isset($result['bibo_contributor'])) {
-      $contributor_ids = array_keys($result['bibo_contributor']);
-    }
-    else {
-      // Try abbreviated name instead of full name.
-      $query = new EntityFieldQuery;
-      $result = $query->entityCondition('entity_type', 'bibo_contributor')
-        ->propertyCondition('name', _bibo_contributor_abbreviate_person_name(trim($parts[0]), trim($parts[1])), '=')
-        ->execute();
-      if (isset($result['bibo_contributor'])) {
-        $contributor_ids = array_keys($result['bibo_contributor']);
-      }
-    }
+  // Find contributor(s) using name as-is.
+  $query = new EntityFieldQuery;
+  $result = $query->entityCondition('entity_type', 'bibo_contributor')
+    ->propertyCondition('name', $name, '=')
+    ->execute();
+  if (isset($result['bibo_contributor'])) {
+    $contributor_ids = array_keys($result['bibo_contributor']);
   }
-  else {
-    // Find organization contributor(s) using name.
+  else if (sizeof($parts) == 2) {
+    // Try finding contributor(s) from abbreviated name instead.
     $query = new EntityFieldQuery;
     $result = $query->entityCondition('entity_type', 'bibo_contributor')
-      ->propertyCondition('name', $name, '=')
+      ->propertyCondition('name', _bibo_contributor_abbreviate_person_name(trim($parts[0]), trim($parts[1])), '=')
       ->execute();
     if (isset($result['bibo_contributor'])) {
       $contributor_ids = array_keys($result['bibo_contributor']);
     }
   }
+  
   // Create new contributor
   if (empty($contributor_ids)) {
     // Found no contributor, create a new one.
