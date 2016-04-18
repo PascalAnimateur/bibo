@@ -23,13 +23,13 @@ function bibo_apa_view_callback($entities, $view_mode = 'full', $langcode = NULL
   if ($view_mode == 'default' || $view_mode == 'full') {
     return entity_get_controller('bibo_work')->view($entities, $view_mode, $langcode, $page);
   }
+
   // Prepare APA view mode.
+  $view = array();
   $entities = entity_key_array_by_property($entities, 'bibo_work_id');
   field_attach_prepare_view('bibo_work', $entities, $view_mode);
   entity_prepare_view('bibo_work', $entities);
   $langcode = isset($langcode) ? $langcode : $GLOBALS['language_content']->language;
-
-  $view = array();
   foreach ($entities as $entity) {
     $build = array(
       '#theme' => 'bibo_apa_' . $view_mode,
@@ -73,34 +73,10 @@ function theme_bibo_apa_citation($variables) {
   $output = '(';
 
   // Build list of authors (last name or organization name).
-  $authors = array();
-  if (isset($entity->bibo_contributors[LANGUAGE_NONE])) {
-    foreach ($entity->bibo_contributors[LANGUAGE_NONE] as $contributor) {
-      if ($contributor['bibo_contribution_role'] == 'author') {
-        $author = bibo_contributor_load($contributor['bibo_contributor_id']);
-        if ($author->type == 'person') {
-          $authors[] = $author->bibo_full_name[LANGUAGE_NONE][0]['family'];
-        }
-        else {
-          $authors[] = $author->name;
-        }
-      }
-    }
-    $output .= implode(', ', $authors);
-    if (!empty($authors)){
-      $output .= ', ';
-    }
-  }
+  $output .= _bibo_apa_format_contributors($entity, 'author', 'last');
 
-  // Get publication status / year.
-  $year = '';
-  if (isset($entity->bibo_publication_status[LANGUAGE_NONE])) {
-    $year = $entity->bibo_publication_status[LANGUAGE_NONE][0]['year'];
-    if (!$year) {
-      $year = _bibo_get_default_publication_statuses($entity->bibo_publication_status[LANGUAGE_NONE][0]['status']);
-    }
-  }
-  $output .= $year;
+  // Append publication status / partial date.
+  $output .= ', ' . _bibo_apa_format_publication_status($entity, 'Y');
 
   return $output . ')';
 }
@@ -108,7 +84,67 @@ function theme_bibo_apa_citation($variables) {
 function theme_bibo_apa_reference($variables) {
   $entity = $variables['entity'];
 
-  // TODO: Render work APA reference.
+  // TODO: Render APA reference.
 
   return 'BIBO APA reference';
+}
+
+/**
+ * Helper function to format a list of contributors.
+ */
+function _bibo_apa_format_contributors($entity, $role, $name_format = 'last_only') {
+  $output = '';
+  
+  $contributors = array();
+  if (isset($entity->bibo_contributors[LANGUAGE_NONE])) {
+    // Build list of formatted contributors.
+    foreach ($entity->bibo_contributors[LANGUAGE_NONE] as $contributor) {
+      if ($contributor['bibo_contribution_role'] == $role) {
+        $contributor = bibo_contributor_load($contributor['bibo_contributor_id']);
+        if ($contributor->type == 'person') {
+          $contributors[] = $contributor->bibo_full_name[LANGUAGE_NONE][0]['family'];
+        }
+        else {
+          $contributors[] = $contributor->name;
+        }
+      }
+    }
+    // Format list of contributors.
+    if (sizeof($contributors) == 1) {
+      $output .= array_shift($contributors);
+    }
+    else if (sizeof($contributors) > 7) {
+      $contributors = array_chunk($contributors, 6);
+      $output .= implode(', ', array_shift($contributors));
+      $output .= ' <em>et al.</em>';
+    }
+    else {
+      $contributor = array_pop($contributors);
+      $output .= implode(', ', $contributors);
+      $output .= ' & ' . $contributor;
+    }
+  }
+
+  return $output;
+}
+
+/**
+ * Helper function to format the publication status / date.
+ */
+function _bibo_apa_format_publication_status($entity, $date_format) {
+  $output = '';
+
+  if (isset($entity->bibo_publication_status[LANGUAGE_NONE])) {
+    if ($entity->bibo_publication_status[LANGUAGE_NONE][0]['status'] != 'published') {
+      // Display publication status label.
+      $output = _bibo_get_default_publication_statuses($entity->bibo_publication_status[LANGUAGE_NONE][0]['status']);
+    }
+    else {
+      // Display formatted date of work.
+      $output = $entity->bibo_publication_status[LANGUAGE_NONE][0]['year'];
+      // TODO: Append month / day if available.
+    }
+  }
+
+  return $output;
 }
