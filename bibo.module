@@ -1072,6 +1072,18 @@ function _bibo_get_default_name_formats($name_format = '') {
 }
 
 /**
+ * Implements hook_date_format_types().
+ */
+function bibo_date_format_types() {
+  // Define the core date format types.
+  return array(
+    BIBO_DATE_FORMAT_FULL => t('BIBO Full date'),
+    BIBO_DATE_FORMAT_YEAR_MONTH => t('BIBO Year, month'),
+    BIBO_DATE_FORMAT_YEAR => t('BIBO Year only'),
+  );
+}
+
+/**
  * Implements hook_date_formats().
  */
 function bibo_date_formats() {

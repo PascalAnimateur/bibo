@@ -233,6 +233,11 @@ function bibo_install() {
   foreach (bibo_field_default_field_instances() as $field_instance) {
     field_create_instance($field_instance);
   }
+
+  // Configure BIBO date format types.
+  variable_set('date_format_bibo_full', 'Y, F j');
+  variable_set('date_format_bibo_year', 'Y');
+  variable_set('date_format_bibo_year_month', 'Y, F');
 }
 
 /**
