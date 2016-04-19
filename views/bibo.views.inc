@@ -31,6 +31,19 @@ function bibo_field_views_data($field) {
     }
     return $data;
   }
+
+  if ($field['type'] == 'bibo_publication_status') {
+    $data = field_views_field_default_views_data($field);
+    foreach ($data as $table_name => $table_data) {
+      // Provide default options for 'status' filter select list.
+      $field_name = $field['field_name'];
+      $data[$table_name][$field_name . '_status']['filter']['handler'] = 'views_handler_filter_in_operator';
+      $data[$table_name][$field_name . '_status']['filter']['options callback'] = '_bibo_get_default_publication_statuses';
+      // Provide custom handler to support click sorting.
+      $data[$table_name][$field_name]['field']['handler'] = 'views_handler_field_publication_status';
+    }
+    return $data;
+  }
 }
 
 /**
