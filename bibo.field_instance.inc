@@ -370,7 +370,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -841,7 +843,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -1313,7 +1317,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -1751,7 +1757,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -2155,7 +2163,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -2593,7 +2603,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -2926,7 +2938,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -3261,7 +3275,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
@@ -3695,7 +3711,9 @@ function bibo_field_default_field_instances() {
       'default' => array(
         'label' => 'inline',
         'module' => 'bibo',
-        'settings' => array(),
+        'settings' => array(
+          'date_format' => 'bibo_full',
+        ),
         'type' => 'bibo_publication_status_formatter_default',
         'weight' => 1,
       ),
